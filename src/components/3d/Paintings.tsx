@@ -203,19 +203,34 @@ function MuseumPaintingItem({
   const isInspecting = useGalleryStore((s) => s.inspectingArtwork?.id === id)
 
   const groupRef = useRef<THREE.Group>(null!)
+  const canvasMatRef = useRef<THREE.MeshStandardMaterial>(null!)
   const isHovered = useRef(false)
 
-  const handleClick = (e: any) => {
+  const handleInspect = (e: any) => {
     e.stopPropagation()
     inspectArtwork(artwork)
   }
 
-  useFrame(() => {
-    if (groupRef.current && !isInspecting) {
-      const targetScale = isHovered.current ? 1.02 : 1.0
-      groupRef.current.scale.setScalar(
-        THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale, 0.1)
-      )
+  // Smooth, fast responsive damping matching park page behavior (smooth without delay)
+  useFrame((_, delta) => {
+    if (!groupRef.current) return
+    const safeDelta = Math.min(delta, 0.05)
+
+    if (!isInspecting) {
+      const targetScale = isHovered.current ? 1.025 : 1.0
+      const curScale = groupRef.current.scale.x
+      const nextScale = THREE.MathUtils.damp(curScale, targetScale, 18, safeDelta)
+      groupRef.current.scale.setScalar(nextScale)
+
+      if (canvasMatRef.current) {
+        const targetEmissive = isHovered.current ? 0.38 : 0.25
+        canvasMatRef.current.emissiveIntensity = THREE.MathUtils.damp(
+          canvasMatRef.current.emissiveIntensity,
+          targetEmissive,
+          18,
+          safeDelta
+        )
+      }
     }
   })
 
@@ -224,15 +239,6 @@ function MuseumPaintingItem({
       ref={groupRef}
       position={position}
       rotation={rotation as unknown as THREE.Euler}
-      onClick={handleClick}
-      onPointerEnter={() => {
-        isHovered.current = true
-        document.body.style.cursor = 'pointer'
-      }}
-      onPointerLeave={() => {
-        isHovered.current = false
-        document.body.style.cursor = 'auto'
-      }}
     >
       {/* Antique Brass Picture Lamp */}
       {hasSpotlight && <AntiquePictureLamp width={width} height={height} />}
@@ -241,6 +247,7 @@ function MuseumPaintingItem({
       <mesh castShadow receiveShadow position={[0, 0, 0.04]}>
         <planeGeometry args={[width, height]} />
         <meshStandardMaterial
+          ref={canvasMatRef}
           map={texture}
           roughness={0.3}
           metalness={0.0}
@@ -285,6 +292,29 @@ function MuseumPaintingItem({
           {artist} · {year}
         </Text>
       </group>
+
+      {/* Dedicated Clean Interaction Hit-Surface (prevents nested mesh flickering and stuck states) */}
+      <mesh
+        position={[0, -0.05, 0.07]}
+        onClick={handleInspect}
+        onPointerOver={(e) => {
+          e.stopPropagation()
+          isHovered.current = true
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerOut={(e) => {
+          e.stopPropagation()
+          isHovered.current = false
+          document.body.style.cursor = 'auto'
+        }}
+        onPointerCancel={() => {
+          isHovered.current = false
+          document.body.style.cursor = 'auto'
+        }}
+      >
+        <planeGeometry args={[width + 0.32, height + 0.52]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
     </group>
   )
 }
