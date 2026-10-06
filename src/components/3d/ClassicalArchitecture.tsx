@@ -45,7 +45,7 @@ export function ClassicalColumn({
       </mesh>
 
       {/* Main Fluted Shaft */}
-      <mesh position={[0, height / 2 + 0.3, 0]} castShadow receiveShadow>
+      <mesh position={[0, height / 2 + 0.1, 0]} castShadow receiveShadow>
         <cylinderGeometry args={[radius * 0.92, radius, height - 1.2, 24]} />
         <primitive object={marbleStoneMat} attach="material" />
       </mesh>

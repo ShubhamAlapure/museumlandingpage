@@ -508,7 +508,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={9.0}
           maxObserveTime={16.0}
           initialStopIdx={0}
-          tints={{ jacket: '#212F3D' }}
+          tints={{ shirt: '#345C72' }}
           scale={1.76}
         />
 
@@ -520,7 +520,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={8.0}
           maxObserveTime={15.0}
           initialStopIdx={3}
-          tints={{ cloth: '#34495E' }}
+          tints={{ shirt: '#6A242E' }}
           scale={1.74}
         />
 
@@ -532,7 +532,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={9.0}
           maxObserveTime={16.0}
           initialStopIdx={0}
-          tints={{ coat: '#4A3B32' }}
+          tints={{ shirt: '#EAE6DF' }}
           scale={1.78}
         />
 
@@ -544,7 +544,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={8.5}
           maxObserveTime={14.0}
           initialStopIdx={3}
-          tints={{ sweater: '#5D4037' }}
+          tints={{ shirt: '#3D5A45' }}
           scale={1.72}
         />
 
@@ -556,7 +556,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={10.0}
           maxObserveTime={18.0}
           initialStopIdx={1}
-          tints={{ shirt: '#1A252C' }}
+          tints={{ shirt: '#B5653C' }}
           scale={1.75}
         />
 
@@ -568,7 +568,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={8.5}
           maxObserveTime={15.0}
           initialStopIdx={4}
-          tints={{ jacket: '#283747' }}
+          tints={{ shirt: '#C2B29D' }}
           scale={1.79}
         />
 
@@ -580,7 +580,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={9.5}
           maxObserveTime={17.0}
           initialStopIdx={1}
-          tints={{ coat: '#3E2723' }}
+          tints={{ shirt: '#545E67' }}
           scale={1.78}
         />
 
@@ -592,7 +592,7 @@ export function MuseumActorsEnsemble() {
           minObserveTime={10.0}
           maxObserveTime={16.0}
           initialStopIdx={3}
-          tints={{ jacket: '#1B2631' }}
+          tints={{ shirt: '#1E2B3E' }}
           scale={1.76}
         />
 
@@ -606,7 +606,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={Math.PI} // Facing -Z (North wall)
           artCenter={[-7.8, 5.5, -29.65]}
           idleAnim="Idle_FoldArms_Loop"
-          tints={{ jacket: '#1C2833' }}
+          tints={{ shirt: '#5C4033' }}
           scale={1.78}
         />
 
@@ -617,7 +617,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={Math.PI} // Facing -Z (North wall)
           artCenter={[7.8, 5.5, -29.65]}
           idleAnim="Idle_Loop"
-          tints={{ jacket: '#2E4053' }}
+          tints={{ shirt: '#4A6956' }}
           scale={1.77}
         />
 
@@ -628,6 +628,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={Math.PI}
           artCenter={[-14.5, 4.4, -29.65]}
           idleAnim="Idle_FoldArms_Loop"
+          tints={{ shirt: '#782833' }}
           scale={1.75}
         />
 
@@ -638,7 +639,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={0} // Facing +Z (South wall)
           artCenter={[0.0, 4.4, 29.65]}
           idleAnim="Idle_FoldArms_Loop"
-          tints={{ coat: '#3C2A21' }}
+          tints={{ shirt: '#4A708B' }}
           scale={1.80}
         />
 
@@ -649,6 +650,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={0}
           artCenter={[-7.8, 5.2, 29.65]}
           idleAnim="Idle_Loop"
+          tints={{ shirt: '#CEBEA5' }}
           scale={1.73}
         />
 
@@ -659,6 +661,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={0}
           artCenter={[7.8, 5.2, 29.65]}
           idleAnim="Idle_FoldArms_Loop"
+          tints={{ shirt: '#A85A32' }}
           scale={1.76}
         />
 
@@ -669,6 +672,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={-Math.PI / 2} // Facing -X (West wall)
           artCenter={[-17.65, 4.4, -15.0]}
           idleAnim="Idle_FoldArms_Loop"
+          tints={{ shirt: '#F2EFEB' }}
           scale={1.75}
         />
 
@@ -679,6 +683,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={-Math.PI / 2}
           artCenter={[-17.65, 4.4, 8.0]}
           idleAnim="Idle_Loop"
+          tints={{ shirt: '#24334A' }}
           scale={1.74}
         />
 
@@ -689,6 +694,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={Math.PI / 2} // Facing +X (East wall)
           artCenter={[17.65, 4.4, -15.0]}
           idleAnim="Idle_Loop"
+          tints={{ shirt: '#6B7280' }}
           scale={1.75}
         />
 
@@ -699,6 +705,7 @@ export function MuseumActorsEnsemble() {
           bodyRotY={Math.PI / 2}
           artCenter={[17.65, 4.4, 8.0]}
           idleAnim="Idle_FoldArms_Loop"
+          tints={{ shirt: '#634832' }}
           scale={1.77}
         />
 
@@ -713,8 +720,8 @@ export function MuseumActorsEnsemble() {
           posB={[0.9, 0, -26.3]}
           artCenter={[0.0, 4.4, -29.65]}
           wallNormal={[0, 0, 1]}
-          tintsA={{ jacket: '#2C3E50' }}
-          tintsB={{ coat: '#4A235A' }}
+          tintsA={{ shirt: '#6E2C3F' }}
+          tintsB={{ shirt: '#BFA98F' }}
           scaleA={1.77}
           scaleB={1.80}
         />
@@ -727,8 +734,8 @@ export function MuseumActorsEnsemble() {
           posB={[-14.8, 0, -25.7]}
           artCenter={[-17.65, 4.4, -25.0]}
           wallNormal={[1, 0, 0]}
-          tintsA={{ jacket: '#1F2937' }}
-          tintsB={{ sweater: '#4B382A' }}
+          tintsA={{ shirt: '#364F3C' }}
+          tintsB={{ shirt: '#E5E7EB' }}
           scaleA={1.78}
           scaleB={1.73}
         />
@@ -741,8 +748,8 @@ export function MuseumActorsEnsemble() {
           posB={[14.8, 0, -15.7]}
           artCenter={[17.65, 4.4, -15.0]}
           wallNormal={[-1, 0, 0]}
-          tintsA={{ coat: '#3E2723' }}
-          tintsB={{ jacket: '#212F3D' }}
+          tintsA={{ shirt: '#C06C46' }}
+          tintsB={{ shirt: '#1B263B' }}
           scaleA={1.77}
           scaleB={1.75}
         />
@@ -765,7 +772,7 @@ export function MuseumActorsEnsemble() {
           ]}
           speed={0.94}
           pauseDuration={6.0}
-          tints={{ jacket: '#2E4053' }}
+          tints={{ shirt: '#5F6B73' }}
           scale={1.76}
           startWpIdx={0}
         />
@@ -785,7 +792,7 @@ export function MuseumActorsEnsemble() {
           ]}
           speed={0.92}
           pauseDuration={7.5}
-          tints={{ shirt: '#1B2631' }}
+          tints={{ shirt: '#722F37' }}
           scale={1.75}
           startWpIdx={2}
         />
@@ -803,7 +810,7 @@ export function MuseumActorsEnsemble() {
           ]}
           speed={0.90}
           pauseDuration={6.5}
-          tints={{ cloth: '#2C3E50' }}
+          tints={{ shirt: '#3A6B88' }}
           scale={1.76}
           startWpIdx={1}
         />
@@ -821,7 +828,7 @@ export function MuseumActorsEnsemble() {
           ]}
           speed={0.93}
           pauseDuration={7.0}
-          tints={{ jacket: '#1C2833' }}
+          tints={{ shirt: '#6F4E37' }}
           scale={1.77}
           startWpIdx={3}
         />
@@ -840,7 +847,7 @@ export function MuseumActorsEnsemble() {
           ]}
           speed={0.89}
           pauseDuration={5.5}
-          tints={{ sweater: '#6E2C00' }}
+          tints={{ shirt: '#2E523E' }}
           scale={1.73}
           startWpIdx={1}
         />
@@ -854,7 +861,7 @@ export function MuseumActorsEnsemble() {
           position={[0.0, 0.08, -10.0]}
           rotationY={0} // Facing South into the grand hall
           anim="Sitting_Idle_Loop"
-          tints={{ pants: '#17202A' }}
+          tints={{ shirt: '#DCD6CD' }}
           scale={1.78}
         />
 
@@ -864,7 +871,7 @@ export function MuseumActorsEnsemble() {
           position={[0.0, 0.08, 10.0]}
           rotationY={Math.PI} // Facing North towards rotunda
           anim="Sitting_Talking_Loop"
-          tints={{ shirt: '#2C3E50' }}
+          tints={{ shirt: '#9E5330' }}
           scale={1.72}
         />
 
@@ -874,6 +881,7 @@ export function MuseumActorsEnsemble() {
           position={[-12.5, 0.08, 15.0]}
           rotationY={Math.PI / 2} // Facing East across aisle
           anim="Sitting_Idle_Loop"
+          tints={{ shirt: '#182535' }}
           scale={1.76}
         />
 
@@ -883,7 +891,7 @@ export function MuseumActorsEnsemble() {
           position={[12.5, 0.08, -5.0]}
           rotationY={-Math.PI / 2} // Facing West across aisle
           anim="Sitting_Idle_Loop"
-          tints={{ jacket: '#394A59' }}
+          tints={{ shirt: '#B8A088' }}
           scale={1.77}
         />
       </group>

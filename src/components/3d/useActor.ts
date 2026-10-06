@@ -267,7 +267,12 @@ export function useActor(name: string, { tints = {} }: { tints?: Record<string, 
           mat.roughness = /body|base/.test(matName) ? 0.62 : 0.88
         }
         for (const [tintKey, tintColor] of Object.entries(tints)) {
-          if (matName.includes(tintKey)) {
+          const k = tintKey.toLowerCase()
+          if (
+            matName.includes(k) ||
+            ((k === 'shirt' || k === 'top' || k === 'clothing' || k === 'jacket' || k === 'coat' || k === 'cloth' || k === 'sweater' || k === 'dress') &&
+              /shirt|dress|sweater|polo|camisole|halter|shift/.test(matName))
+          ) {
             mat.color = new THREE.Color(tintColor)
           }
         }

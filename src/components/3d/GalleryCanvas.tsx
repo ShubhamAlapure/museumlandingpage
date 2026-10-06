@@ -8,6 +8,7 @@ import { ClassicalMuseumFloor, FloatingDustMotes } from './FloorAndDust'
 import { CameraController } from './CameraController'
 import { AudioAmbience } from './AudioAmbience'
 import { GalleryVisitorsEnsemble } from './Characters'
+import { LiveArtScene } from './LiveArtScene'
 
 // ── Master Museum Lighting Design (Cinematic Historic European Atmosphere) ──
 function MuseumLighting() {
@@ -86,6 +87,9 @@ function GrandHistoricMuseumScene() {
 
       {/* Realistic Human Visitors / Museum Actors Ensemble */}
       <GalleryVisitorsEnsemble />
+
+      {/* Live Impressionist Painting Studio Scene */}
+      <LiveArtScene />
 
       {/* Floating Sunbeam Dust Motes */}
       <FloatingDustMotes count={400} />
