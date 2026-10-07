@@ -51,6 +51,12 @@ export function CameraController() {
   const walkCycle = useRef(0)
   const isPointerLockedLocal = useRef(false)
 
+  // Mouse navigation & Click+Drag look state
+  const isDragging = useRef(false)
+  const lastMousePos = useRef({ x: 0, y: 0 })
+  const mouseNavInput = useRef(new THREE.Vector2(0, 0))
+  const mouseNavSmoothed = useRef(new THREE.Vector2(0, 0))
+
   // Inspection Tweening Target
   const inspectTargetPos = useRef(new THREE.Vector3())
   const inspectTargetLook = useRef(new THREE.Vector3())
@@ -67,6 +73,10 @@ export function CameraController() {
           e.code === 'KeyS' ||
           e.code === 'KeyA' ||
           e.code === 'KeyD' ||
+          e.code === 'ArrowUp' ||
+          e.code === 'ArrowDown' ||
+          e.code === 'ArrowLeft' ||
+          e.code === 'ArrowRight' ||
           e.code === 'Escape') &&
         useGalleryStore.getState().inspectingArtwork
       ) {
@@ -86,7 +96,7 @@ export function CameraController() {
     }
   }, [closeInspection])
 
-  // ── 2. Pointer Lock & Mouse Look Listeners ────────────────────────────────
+  // ── 2. Mouse Navigation & Click+Drag Look Listeners ───────────────────────
   useEffect(() => {
     const canvas = gl.domElement
 
@@ -96,31 +106,87 @@ export function CameraController() {
       setIsPointerLocked(locked)
     }
 
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isPointerLockedLocal.current || useGalleryStore.getState().inspectingArtwork) return
-
-      const sensitivity = 0.0022
-      yaw.current -= e.movementX * sensitivity
-      pitch.current -= e.movementY * sensitivity
-
-      // Clamp vertical pitch to prevent flipping upside down (~ -82° to +82°)
-      pitch.current = Math.max(-1.42, Math.min(1.42, pitch.current))
-    }
-
-    const onCanvasClick = () => {
-      if (!isPointerLockedLocal.current && !useGalleryStore.getState().inspectingArtwork) {
-        canvas.requestPointerLock?.() || document.body.requestPointerLock?.()
+    const onPointerDown = (e: PointerEvent) => {
+      if (useGalleryStore.getState().inspectingArtwork) return
+      if (e.button === 0) {
+        // Left click initiates drag-to-look
+        isDragging.current = true
+        lastMousePos.current = { x: e.clientX, y: e.clientY }
+        // Stop any accumulated mouse navigation while looking around
+        mouseNavInput.current.set(0, 0)
       }
     }
 
+    const onPointerUp = () => {
+      isDragging.current = false
+    }
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (useGalleryStore.getState().inspectingArtwork) return
+
+      // Determine movement deltas (with fallback if movementX/Y is zero or unavailable)
+      const dx = e.movementX !== undefined && e.movementX !== 0 ? e.movementX : e.clientX - lastMousePos.current.x
+      const dy = e.movementY !== undefined && e.movementY !== 0 ? e.movementY : e.clientY - lastMousePos.current.y
+      lastMousePos.current = { x: e.clientX, y: e.clientY }
+
+      if (isDragging.current || isPointerLockedLocal.current) {
+        // ── 3. Click + Drag to look around (or pointer-locked look) ──
+        const lookSensitivity = 0.0024
+        yaw.current -= dx * lookSensitivity
+        pitch.current -= dy * lookSensitivity
+
+        // Clamp vertical pitch (~ -82° to +82°)
+        pitch.current = Math.max(-1.42, Math.min(1.42, pitch.current))
+      } else {
+        // ── 2. Mouse movement for navigation (when not dragging) ──
+        // Move mouse forward/up (dy < 0) → move forward (+W)
+        // Move mouse back/down (dy > 0) → move backward (-S)
+        // Move mouse left (dx < 0) → move left (-A)
+        // Move mouse right (dx > 0) → move right (+D)
+        const navSensitivity = 0.038
+        const forwardDelta = -dy * navSensitivity
+        const strafeDelta = dx * navSensitivity
+
+        // Smoothly accumulate navigation input with natural bounding
+        mouseNavInput.current.x = THREE.MathUtils.clamp(
+          mouseNavInput.current.x + strafeDelta,
+          -1.0,
+          1.0
+        )
+        mouseNavInput.current.y = THREE.MathUtils.clamp(
+          mouseNavInput.current.y + forwardDelta,
+          -1.0,
+          1.0
+        )
+      }
+    }
+
+    const onPointerLeave = () => {
+      // Gracefully decay navigation when cursor leaves canvas
+      mouseNavInput.current.set(0, 0)
+    }
+
+    const onWindowBlur = () => {
+      isDragging.current = false
+      mouseNavInput.current.set(0, 0)
+    }
+
     document.addEventListener('pointerlockchange', onPointerLockChange)
-    document.addEventListener('mousemove', onMouseMove)
-    canvas.addEventListener('click', onCanvasClick)
+    canvas.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('pointerup', onPointerUp)
+    window.addEventListener('pointercancel', onPointerUp)
+    window.addEventListener('pointermove', onPointerMove)
+    canvas.addEventListener('pointerleave', onPointerLeave)
+    window.addEventListener('blur', onWindowBlur)
 
     return () => {
       document.removeEventListener('pointerlockchange', onPointerLockChange)
-      document.removeEventListener('mousemove', onMouseMove)
-      canvas.removeEventListener('click', onCanvasClick)
+      canvas.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('pointerup', onPointerUp)
+      window.removeEventListener('pointercancel', onPointerUp)
+      window.removeEventListener('pointermove', onPointerMove)
+      canvas.removeEventListener('pointerleave', onPointerLeave)
+      window.removeEventListener('blur', onWindowBlur)
     }
   }, [gl, setIsPointerLocked])
 
@@ -165,26 +231,49 @@ export function CameraController() {
       return
     }
 
-    // ── Mode B: True First-Person FPS Walking & Mouse Look ──
+    // ── Mode B: True First-Person FPS Walking & Navigation ──
     const isSprinting = keys.current['ShiftLeft'] || keys.current['ShiftRight']
     const baseSpeed = isSprinting ? 7.2 : 4.4 // meters per second
     const frameSpeed = baseSpeed * Math.min(delta, 0.1)
 
-    // Compute Movement Inputs
-    const forwardInput =
+    // Smoothly blend & decay mouse navigation input (natural gliding and responsive deceleration)
+    mouseNavSmoothed.current.lerp(mouseNavInput.current, 0.26)
+    mouseNavInput.current.multiplyScalar(0.72)
+    if (mouseNavInput.current.lengthSq() < 0.0001) {
+      mouseNavInput.current.set(0, 0)
+    }
+
+    // Compute Keyboard Inputs
+    const keyboardForward =
       (keys.current['KeyW'] || keys.current['ArrowUp'] ? 1 : 0) -
       (keys.current['KeyS'] || keys.current['ArrowDown'] ? 1 : 0)
-    const strafeInput =
+    const keyboardStrafe =
       (keys.current['KeyD'] || keys.current['ArrowRight'] ? 1 : 0) -
       (keys.current['KeyA'] || keys.current['ArrowLeft'] ? 1 : 0)
+
+    // Combined Keyboard + Mouse Navigation Inputs (clamped to [-1, 1])
+    const forwardInput = THREE.MathUtils.clamp(
+      keyboardForward + mouseNavSmoothed.current.y,
+      -1,
+      1
+    )
+    const strafeInput = THREE.MathUtils.clamp(
+      keyboardStrafe + mouseNavSmoothed.current.x,
+      -1,
+      1
+    )
 
     // Direction Vectors from Yaw
     const forward = new THREE.Vector3(-Math.sin(yaw.current), 0, -Math.cos(yaw.current))
     const right = new THREE.Vector3(Math.cos(yaw.current), 0, -Math.sin(yaw.current))
 
     const targetVel = new THREE.Vector3()
-    if (forwardInput !== 0 || strafeInput !== 0) {
-      const moveVec = new THREE.Vector2(strafeInput, forwardInput).normalize()
+    const inputMagnitude = Math.hypot(strafeInput, forwardInput)
+    if (inputMagnitude > 0.01) {
+      const moveVec = new THREE.Vector2(strafeInput, forwardInput)
+      if (moveVec.length() > 1) {
+        moveVec.normalize()
+      }
       targetVel.addScaledVector(forward, moveVec.y * frameSpeed)
       targetVel.addScaledVector(right, moveVec.x * frameSpeed)
     }

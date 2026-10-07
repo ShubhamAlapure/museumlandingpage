@@ -18,7 +18,7 @@ export function ControlsHUD() {
         <div className="key-pill glass-panel text-[#F5F0E8] border border-[#C9A94F]/40 shadow-2xl py-1.5 px-3.5 animate-bounce">
           <MousePointer size={12} className="text-[#C9A94F]" />
           <span className="text-xs font-semibold text-[#F5F0E8] tracking-wide">
-            Click to look around · WASD to walk
+            Click + Drag to look · Move Mouse or WASD to walk
           </span>
         </div>
       )}
@@ -26,14 +26,14 @@ export function ControlsHUD() {
       <div className="flex flex-wrap items-center gap-2">
         <div className="key-pill glass-panel text-[#F5F0E8]/80 border border-[#C9A94F]/25 shadow-lg">
           <span className="key-badge bg-[#C9A94F]/20 text-[#C9A94F] border border-[#C9A94F]/40 font-bold">
-            WASD
+            WASD / Mouse
           </span>
           <span className="text-[11px] font-medium tracking-wide">Walk</span>
         </div>
 
         <div className="key-pill glass-panel text-[#F5F0E8]/80 border border-[#C9A94F]/25 shadow-lg">
           <span className="key-badge bg-[#C9A94F]/20 text-[#C9A94F] border border-[#C9A94F]/40 font-bold">
-            Mouse
+            Drag
           </span>
           <span className="text-[11px] font-medium tracking-wide">Look</span>
         </div>
@@ -49,7 +49,7 @@ export function ControlsHUD() {
           <span className="key-badge bg-[#C9A94F]/20 text-[#C9A94F] border border-[#C9A94F]/40 font-bold">
             ESC
           </span>
-          <span className="text-[11px] font-medium tracking-wide">Unlock Mouse</span>
+          <span className="text-[11px] font-medium tracking-wide">Close</span>
         </div>
       </div>
     </div>
