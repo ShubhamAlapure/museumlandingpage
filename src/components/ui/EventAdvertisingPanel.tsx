@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ArrowRight,
   ArrowDown,
@@ -8,40 +8,70 @@ import {
   ShieldCheck,
   Ticket,
   Calendar,
-  Clock,
-  MapPin,
-  Sparkles,
-  Compass,
   Eye,
+  EyeOff,
+  Check,
   Share2,
 } from 'lucide-react'
 
-// ── 1. Pass Registration Modal Component ─────────────────────────────────────
-function ExhibitionPassModal({
+// ── 1. Clean Premium "JOIN US" Registration Modal (from Reference Design) ─────
+function JoinUsModal({
   isOpen,
   onClose,
 }: {
   isOpen: boolean
   onClose: () => void
 }) {
-  const [patronName, setPatronName] = useState('')
-  const [patronEmail, setPatronEmail] = useState('')
-  const [selectedDate, setSelectedDate] = useState('Immediate Access (Today)')
-  const [isClaimed, setIsClaimed] = useState(false)
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [userType, setUserType] = useState<'collector' | 'artist'>('collector')
+  const [captchaVerified, setCaptchaVerified] = useState(false)
+  const [isCaptchaChecking, setIsCaptchaChecking] = useState(false)
+  const [acceptedTerms, setAcceptedTerms] = useState(true)
+  const [isRegistered, setIsRegistered] = useState(false)
   const [passNumber] = useState(() => Math.floor(100000 + Math.random() * 900000))
   const [isCopied, setIsCopied] = useState(false)
 
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
+
   if (!isOpen) return null
 
-  const handleClaim = (e: React.FormEvent) => {
+  const handleCaptchaClick = () => {
+    if (captchaVerified) return
+    setIsCaptchaChecking(true)
+    setTimeout(() => {
+      setIsCaptchaChecking(false)
+      setCaptchaVerified(true)
+    }, 600)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (patronName.trim()) {
-      setIsClaimed(true)
+    if (!acceptedTerms) {
+      alert('Please accept the Terms & Conditions and Privacy Policy.')
+      return
     }
+    setIsRegistered(true)
+  }
+
+  const handleGoogleJoin = () => {
+    if (!fullName) setFullName('Google Patron')
+    setIsRegistered(true)
   }
 
   const handleCopyCode = () => {
-    navigator.clipboard?.writeText(`EMFA-PASS-#${passNumber}-${patronName}`)
+    navigator.clipboard?.writeText(`ZIGGURATSS-PASS-#${passNumber}-${fullName || 'PATRON'}`)
     setIsCopied(true)
     setTimeout(() => setIsCopied(false), 2000)
   }
@@ -50,163 +80,296 @@ function ExhibitionPassModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md animate-in fade-in duration-200 select-text"
     >
-      <div className="relative w-full max-w-md bg-[#FAF8F5] rounded-2xl border border-[#E3DDD3] shadow-[0_24px_64px_rgba(0,0,0,0.35)] p-6 sm:p-7 text-[#16221B] overflow-hidden max-h-[92vh] overflow-y-auto custom-scrollbar">
+      <div className="relative w-full max-w-[500px] bg-white rounded-2xl sm:rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] border border-[#E5E7EB] p-7 sm:p-9 text-[#1E1D2E] overflow-hidden max-h-[92vh] overflow-y-auto custom-scrollbar">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/5 text-[#55635C] hover:text-[#16221B] transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-full hover:bg-[#F3F4F6] text-[#6B7280] hover:text-[#111827] transition-colors cursor-pointer"
           aria-label="Close modal"
         >
-          <X size={17} />
+          <X size={19} />
         </button>
 
-        {!isClaimed ? (
+        {!isRegistered ? (
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#C2613D]" />
-              <span className="text-[10px] tracking-[0.24em] uppercase text-[#1E362A] font-bold">
-                Complimentary Pass
-              </span>
+            {/* Header */}
+            <div className="text-center mb-6">
+              <h2
+                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#161834] uppercase"
+                style={{ fontFamily: "'Inter', 'Outfit', sans-serif" }}
+              >
+                JOIN US
+              </h2>
+              <p className="text-sm text-[#4B5563] mt-1 font-normal">
+                Enter your details to get access
+              </p>
             </div>
 
-            <h2
-              className="text-2xl sm:text-3xl font-serif text-[#16221B] mb-1.5 leading-tight"
-              style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
-            >
-              Claim Exhibition Pass
-            </h2>
-
-            <p className="text-xs text-[#55635C] mb-5 leading-relaxed">
-              Full honorary access to the 3D Master Hall, interactive painting inspection, and curated European fine art collections.
-            </p>
-
-            <form onSubmit={handleClaim} className="space-y-3.5">
+            {/* Registration Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Full Name */}
               <div>
-                <label className="block text-[10px] font-semibold text-[#66776F] uppercase tracking-wider mb-1">
-                  Patron Name *
+                <label className="block text-xs sm:text-[13px] font-medium text-[#2D3748] mb-1.5 text-left">
+                  Full Name
                 </label>
                 <input
                   type="text"
                   required
-                  value={patronName}
-                  onChange={(e) => setPatronName(e.target.value)}
-                  placeholder="e.g. Lady Catherine Vance"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DDD3] text-xs text-[#16221B] placeholder-[#9CA3AF] focus:border-[#1E362A] focus:ring-1 focus:ring-[#1E362A] focus:outline-none transition-all shadow-xs"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Full Name"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-[#D1D5DB] text-xs sm:text-sm text-[#1F2937] placeholder-[#9CA3AF] focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-colors"
                 />
               </div>
 
+              {/* Email Address */}
               <div>
-                <label className="block text-[10px] font-semibold text-[#66776F] uppercase tracking-wider mb-1">
-                  Email Address (Optional)
+                <label className="block text-xs sm:text-[13px] font-medium text-[#2D3748] mb-1.5 text-left">
+                  Email Address
                 </label>
                 <input
                   type="email"
-                  value={patronEmail}
-                  onChange={(e) => setPatronEmail(e.target.value)}
-                  placeholder="catherine.vance@fineart.org"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DDD3] text-xs text-[#16221B] placeholder-[#9CA3AF] focus:border-[#1E362A] focus:ring-1 focus:ring-[#1E362A] focus:outline-none transition-all shadow-xs"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-[#D1D5DB] text-xs sm:text-sm text-[#1F2937] placeholder-[#9CA3AF] focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-colors"
                 />
               </div>
 
+              {/* Password with Show/Hide Toggle */}
               <div>
-                <label className="block text-[10px] font-semibold text-[#66776F] uppercase tracking-wider mb-1">
-                  Visiting Season
+                <label className="block text-xs sm:text-[13px] font-medium text-[#2D3748] mb-1.5 text-left">
+                  Password
                 </label>
-                <select
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DDD3] text-xs text-[#16221B] focus:border-[#1E362A] focus:ring-1 focus:ring-[#1E362A] focus:outline-none transition-all shadow-xs cursor-pointer"
-                >
-                  <option value="Immediate Access (Today)">Immediate Access (Today)</option>
-                  <option value="15 OCT — 30 NOV 2026">15 OCT — 30 NOV 2026 (Exhibition Season)</option>
-                  <option value="Winter Gala 2026">Winter Gala 2026</option>
-                </select>
+                <div className="relative flex items-center">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    className="w-full px-4 py-2.5 sm:py-3 pr-11 rounded-lg border border-[#D1D5DB] text-xs sm:text-sm text-[#1F2937] placeholder-[#9CA3AF] focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-colors"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 text-[#6B7280] hover:text-[#111827] cursor-pointer p-1"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
 
-              <div className="pt-2">
+              {/* User Type Selection Radio */}
+              <div className="flex flex-wrap items-center gap-5 pt-1 text-xs sm:text-[13px] text-[#374151]">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="collector"
+                    checked={userType === 'collector'}
+                    onChange={() => setUserType('collector')}
+                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB] cursor-pointer"
+                  />
+                  <span>I am an art lover, a collector</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="artist"
+                    checked={userType === 'artist'}
+                    onChange={() => setUserType('artist')}
+                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB] cursor-pointer"
+                  />
+                  <span>I am an artist</span>
+                </label>
+              </div>
+
+              {/* reCAPTCHA Verification Component */}
+              <div className="pt-1">
+                <div className="flex items-center justify-between bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3.5 py-2.5 w-full max-w-[270px] shadow-xs select-none">
+                  <div
+                    className="flex items-center gap-3 cursor-pointer"
+                    onClick={handleCaptchaClick}
+                  >
+                    <div
+                      className={`w-6 h-6 rounded border transition-all flex items-center justify-center ${
+                        captchaVerified
+                          ? 'bg-[#10B981] border-[#10B981] text-white'
+                          : isCaptchaChecking
+                          ? 'border-[#3B82F6] animate-pulse'
+                          : 'bg-white border-[#D1D5DB] hover:border-[#9CA3AF]'
+                      }`}
+                    >
+                      {captchaVerified && (
+                        <Check size={16} strokeWidth={3} className="text-white" />
+                      )}
+                      {isCaptchaChecking && (
+                        <div className="w-3.5 h-3.5 border-2 border-[#3B82F6] border-t-transparent rounded-full animate-spin" />
+                      )}
+                    </div>
+                    <span className="text-xs sm:text-[13px] font-medium text-[#222222]">
+                      I'm not a robot
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center pl-2">
+                    <svg className="w-6 h-6 text-[#1A73E8]" viewBox="0 0 48 48" fill="none">
+                      <path
+                        d="M24 8V2L16 10L24 18V12C30.63 12 36 17.37 36 24C36 26.04 35.48 27.96 34.58 29.64L37.52 32.58C39.08 30.06 40 27.14 40 24C40 15.16 32.84 8 24 8ZM24 36C17.37 36 12 30.63 12 24C12 21.96 12.52 20.04 13.42 18.36L10.48 15.42C8.92 17.94 8 20.86 8 24C8 32.84 15.16 40 24 40V46L32 38L24 30V36Z"
+                        fill="#1A73E8"
+                      />
+                    </svg>
+                    <span className="text-[7.5px] text-[#9CA3AF] tracking-tight font-sans">
+                      reCAPTCHA
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Terms and Privacy Policy Checkbox */}
+              <div className="pt-1">
+                <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded text-[#D4AF37] accent-[#D4AF37] cursor-pointer"
+                  />
+                  <span className="text-xs text-[#4B5563] leading-snug">
+                    By Registering, I Accept The Terms & Conditions & Privacy Policy Of Zigguratss Artwork LLP.
+                  </span>
+                </label>
+              </div>
+
+              {/* Action Buttons: Gold JOIN US / OR / Join Using Google */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 pt-3">
                 <button
                   type="submit"
-                  className="w-full bg-[#1E362A] hover:bg-[#16281F] text-white py-3.5 rounded-xl font-semibold text-xs uppercase tracking-widest cursor-pointer shadow-[0_4px_16px_rgba(30,54,42,0.25)] hover:shadow-[0_6px_22px_rgba(30,54,42,0.35)] transition-all flex items-center justify-center gap-2 group"
+                  className="w-full sm:w-auto sm:min-w-[150px] bg-[#D4AF37] hover:bg-[#C29B27] active:bg-[#B08A1E] text-white py-3 px-7 rounded-full font-semibold text-xs sm:text-[13px] uppercase tracking-wider cursor-pointer shadow-md hover:shadow-lg transition-all duration-200 text-center"
                 >
-                  <Ticket size={15} className="group-hover:rotate-12 transition-transform duration-200" />
-                  Issue Exhibition Pass
+                  JOIN US
+                </button>
+
+                <span className="text-xs sm:text-sm font-medium text-[#6B7280] uppercase tracking-wide">
+                  OR
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleGoogleJoin}
+                  className="w-full sm:w-auto sm:min-w-[185px] bg-[#F3F4F6] hover:bg-[#E5E7EB] border border-[#E5E7EB] text-[#374151] py-2.5 px-4 rounded-full text-xs sm:text-[13px] font-medium flex items-center justify-center gap-2.5 cursor-pointer transition-all shadow-xs"
+                >
+                  {/* Google Multicolor 'G' Icon */}
+                  <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+                    <path
+                      fill="#4285F4"
+                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                    />
+                    <path
+                      fill="#EA4335"
+                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                    />
+                  </svg>
+                  <span>Join Using Google</span>
                 </button>
               </div>
             </form>
           </div>
         ) : (
-          <div className="space-y-4 animate-in fade-in slide-in-from-bottom-3 duration-300 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#7E9D8B]/20 border border-[#7E9D8B]/50 flex items-center justify-center mx-auto text-[#1E362A]">
-              <CheckCircle2 size={24} />
+          /* Confirmation Pass Screen */
+          <div className="space-y-4 animate-in fade-in slide-in-from-bottom-3 duration-300 text-center py-2">
+            <div className="w-14 h-14 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center mx-auto text-[#10B981]">
+              <CheckCircle2 size={30} />
             </div>
 
             <div>
-              <span className="text-[9.5px] tracking-[0.25em] uppercase text-[#1E362A] font-bold">
+              <span className="text-[10px] tracking-[0.25em] uppercase text-[#D4AF37] font-bold">
                 Pass Confirmed · Verified
               </span>
               <h2
-                className="text-2xl font-serif text-[#16221B] mt-1"
+                className="text-2xl font-serif text-[#161834] mt-1"
                 style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
               >
-                Welcome, {patronName}
+                Welcome, {fullName || 'Patron'}
               </h2>
+              <p className="text-xs text-[#6B7280] mt-1">
+                You have received honorary access as an{' '}
+                <strong className="text-[#161834]">
+                  {userType === 'artist' ? 'Artist Patron' : 'Art Lover & Collector'}
+                </strong>
+                .
+              </p>
             </div>
 
             {/* Commemorative Pass Card */}
-            <div className="rounded-xl border border-[#E3DDD3] bg-white p-4 text-left shadow-xs space-y-3 relative overflow-hidden">
-              <div className="flex items-center justify-between border-b border-[#EBE5DB] pb-2.5">
+            <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] p-4 text-left shadow-xs space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2.5">
                 <div className="flex items-center gap-1.5">
-                  <Landmark size={14} className="text-[#1E362A]" />
-                  <span className="text-[9px] uppercase tracking-wider text-[#1E362A] font-bold">
-                    The European Museum of Fine Art
+                  <Landmark size={14} className="text-[#D4AF37]" />
+                  <span className="text-[9px] uppercase tracking-wider text-[#161834] font-bold">
+                    Zigguratss Artwork · Grand Master Hall
                   </span>
                 </div>
-                <span className="text-[10px] font-mono font-semibold text-[#55635C]">
+                <span className="text-[10px] font-mono font-semibold text-[#6B7280]">
                   № {passNumber}
                 </span>
               </div>
 
               <div className="space-y-1">
                 <h3
-                  className="text-lg font-serif text-[#16221B] font-semibold"
+                  className="text-base font-serif text-[#161834] font-semibold"
                   style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
                 >
-                  The Living Gallery
+                  The Living Gallery Exhibition
                 </h3>
-                <p className="text-[11px] text-[#1E362A] font-medium">
-                  Grand Master Hall · Complimentary Admission
+                <p className="text-[11px] text-[#4B5563]">
+                  Grand Master Hall · 3D Interactive Exhibition
                 </p>
-                <div className="flex items-center gap-2 text-[10px] text-[#66776F] pt-0.5">
-                  <Calendar size={11} className="text-[#C2613D]" />
+                <div className="flex items-center gap-2 text-[10px] text-[#6B7280] pt-0.5">
+                  <Calendar size={11} className="text-[#D4AF37]" />
                   <span>15 OCT — 30 NOV 2026</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2.5 border-t border-[#EBE5DB] text-[10px] text-[#55635C]">
+              <div className="flex items-center justify-between pt-2.5 border-t border-[#E5E7EB] text-[10px] text-[#6B7280]">
                 <span>
-                  Holder: <strong className="text-[#16221B] font-semibold">{patronName}</strong>
+                  Holder: <strong className="text-[#161834] font-semibold">{fullName || 'Patron'}</strong>
                 </span>
-                <span className="text-[#1E362A] flex items-center gap-1 font-semibold">
+                <span className="text-[#10B981] flex items-center gap-1 font-semibold">
                   <ShieldCheck size={12} /> Verified
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-1">
+            <div className="flex items-center gap-2 pt-2">
               <button
                 onClick={onClose}
-                className="flex-1 bg-[#1E362A] hover:bg-[#16281F] text-white py-3 rounded-xl font-semibold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-xs"
+                className="flex-1 bg-[#D4AF37] hover:bg-[#C29B27] text-white py-3 rounded-full font-semibold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-xs"
               >
                 Enter Museum Hall
               </button>
               <button
                 onClick={handleCopyCode}
-                className="px-3.5 py-3 rounded-xl border border-[#E3DDD3] hover:bg-black/5 text-xs font-medium text-[#55635C] hover:text-[#16221B] transition-colors cursor-pointer flex items-center gap-1.5"
+                className="px-4 py-3 rounded-full border border-[#E5E7EB] hover:bg-black/5 text-xs font-medium text-[#4B5563] hover:text-[#111827] transition-colors cursor-pointer flex items-center gap-1.5"
                 title="Copy Pass Reference"
               >
-                {isCopied ? <CheckCircle2 size={13} className="text-[#1E362A]" /> : <Share2 size={13} />}
+                {isCopied ? <CheckCircle2 size={13} className="text-[#10B981]" /> : <Share2 size={13} />}
                 {isCopied ? 'Copied' : 'Share'}
               </button>
             </div>
@@ -587,7 +750,7 @@ export function EventAdvertisingPanel() {
       </aside>
 
       {/* Modal Dialogs */}
-      <ExhibitionPassModal
+      <JoinUsModal
         isOpen={isPassModalOpen}
         onClose={() => setIsPassModalOpen(false)}
       />
