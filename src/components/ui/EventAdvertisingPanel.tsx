@@ -101,7 +101,7 @@ function JoinUsModal({
   }
 
   const handleCopyCode = () => {
-    navigator.clipboard?.writeText(`ZIGGURATSS-PASS-#${passNumber}-${fullName || 'PATRON'}`)
+    navigator.clipboard?.writeText(`MUSEUM-PASS-#${passNumber}-${fullName || 'PATRON'}`)
     setIsCopied(true)
     setTimeout(() => setIsCopied(false), 2000)
   }
@@ -384,8 +384,8 @@ function JoinUsModal({
                 &amp;{' '}
                 <a href="#" onClick={(e) => e.preventDefault()}>
                   Privacy Policy
-                </a>{' '}
-                of Zigguratss Artwork LLP.
+                </a>
+                .
               </span>
             </label>
             <div className="jur-msg" style={{ margin: '0 0 12px' }}>
@@ -474,7 +474,7 @@ function JoinUsModal({
                 <div className="flex items-center gap-2">
                   <Landmark size={16} className="text-[#E0C46A]" />
                   <span className="text-[10px] uppercase tracking-wider text-[#F3EFE2] font-bold">
-                    Zigguratss Artwork · Grand Master Hall
+                    The Living Gallery · Grand Master Hall
                   </span>
                 </div>
                 <span className="text-xs font-mono font-semibold text-[#A9A5C4]">
