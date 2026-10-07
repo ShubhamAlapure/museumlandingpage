@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   ArrowRight,
   ArrowDown,
@@ -29,25 +29,16 @@ function JoinUsModal({
   const [userType, setUserType] = useState<'collector' | 'artist'>('collector')
   const [captchaVerified, setCaptchaVerified] = useState(false)
   const [isCaptchaChecking, setIsCaptchaChecking] = useState(false)
-  const [acceptedTerms, setAcceptedTerms] = useState(true)
-  const [isRegistered, setIsRegistered] = useState(false)
-  const [passNumber] = useState(() => Math.floor(100000 + Math.random() * 900000))
-  const [isCopied, setIsCopied] = useState(false)
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
+
   const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [pwError, setPwError] = useState('')
   const [termsError, setTermsError] = useState('')
+  const [isRegistered, setIsRegistered] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
 
-  useEffect(() => {
-    if (!isOpen) return
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose()
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, onClose])
+  const passNumber = useMemo(() => Math.floor(100000 + Math.random() * 900000), [])
 
   if (!isOpen) return null
 
@@ -58,14 +49,14 @@ function JoinUsModal({
       setIsCaptchaChecking(false)
       setCaptchaVerified(true)
       setTermsError('')
-    }, 500)
+    }, 450)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     let valid = true
 
-    if (fullName.trim().length < 2) {
+    if (!fullName.trim() || fullName.trim().length < 2) {
       setNameError('Enter your full name.')
       valid = false
     } else {
@@ -90,7 +81,7 @@ function JoinUsModal({
     }
 
     if (!captchaVerified) {
-      setTermsError("Tick “I'm not a robot” to continue.")
+      setTermsError("Tick “I’m not a robot” to continue.")
       return
     }
 
@@ -121,7 +112,7 @@ function JoinUsModal({
   if (/[A-Z]/.test(password)) pwStrength++
   if (/\d/.test(password)) pwStrength++
   if (/[^A-Za-z0-9]/.test(password) || password.length >= 12) pwStrength++
-  const meterColors = ['#FF8F87', '#D9822B', '#CFB04E', '#7BD49C']
+  const meterColors = ['#b3261e', '#d9822b', '#cfb04e', '#2e7d4f']
 
   return (
     <div
@@ -130,394 +121,329 @@ function JoinUsModal({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 select-text overflow-y-auto"
+      className="jur-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md overflow-y-auto"
     >
-      <div
-        className="relative w-full max-w-[460px] my-auto bg-[#1A1547]/95 backdrop-blur-xl rounded-[28px] shadow-[0_30px_80px_rgba(15,12,43,0.6)] border border-[#3A3470]/80 p-[36px_32px] text-[#F3EFE2] overflow-y-auto custom-scrollbar flex flex-col justify-between"
-      >
-        {/* Close Button */}
+      <style>{`
+        .jur-overlay {
+          --bg:#0f0c2b;
+          --card:#1a1547;
+          --ink:#f3efe2;
+          --mute:#a9a5c4;
+          --line:#3a3470;
+          --gold:#cfb04e;
+          --gold-d:#e0c46a;
+          --err:#ff8f87;
+          --ok:#7bd49c;
+          --on-gold:#17123f;
+          box-sizing: border-box;
+          font-family: Montserrat, system-ui, sans-serif;
+        }
+        .jur-card {
+          width: 100%;
+          max-width: 460px;
+          padding: 36px 32px;
+          border-radius: 28px;
+          background: color-mix(in srgb, var(--card) 95%, transparent);
+          -webkit-backdrop-filter: blur(18px) saturate(1.2);
+          backdrop-filter: blur(18px) saturate(1.2);
+          border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+          box-shadow: 0 30px 80px rgba(23,18,63,.28);
+          position: relative;
+          overflow: hidden;
+          isolation: isolate;
+          --tex: .55;
+          text-align: left;
+          color: var(--ink);
+          margin: auto;
+        }
+        .jur-card:before {
+          content: "";
+          position: absolute;
+          inset: -30px;
+          z-index: -1;
+          pointer-events: none;
+          opacity: var(--tex);
+          filter: blur(14px);
+          background: radial-gradient(circle at 16% 10%,#6f94cf 0 15%,transparent 16%),radial-gradient(circle at 88% 28%,#d9c78f 0 9%,transparent 10%),linear-gradient(160deg,transparent 0 34%,#4a74b8 34% 50%,transparent 50%),radial-gradient(circle at 72% 88%,#3f68ad 0 24%,transparent 25%),radial-gradient(circle at 8% 70%,#8fb0e0 0 12%,transparent 13%),repeating-linear-gradient(100deg,#3f68ad 0 16px,transparent 16px 44px);
+        }
+        .jur-card:after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          pointer-events: none;
+          opacity: .14;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        }
+        .jur-hd { text-align: center; margin-bottom: 24px; }
+        .jur-eyebrow { font: 600 11px Montserrat,sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--gold-d); display: flex; justify-content: center; gap: 10px; align-items: center; }
+        .jur-eyebrow:before, .jur-eyebrow:after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+        .jur-hd h1 { font: 700 46px/1.05 'Playfair Display', Georgia, serif; margin: 10px 0 6px; letter-spacing: -.01em; color: var(--ink); }
+        .jur-sub { color: var(--mute); margin: 0; font-size: 15px; font-weight: 400; line-height: 1.5; }
+        .jur-orn { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; }
+        .jur-orn span { width: 56px; height: 1px; background: var(--line); display: block; }
+        .jur-orn b { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); display: block; }
+        .jur-x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: none; color: var(--mute); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .jur-x:hover { background: var(--line); color: var(--ink); }
+        .jur-x:focus-visible { outline: 2px solid var(--gold-d); }
+        .jur-google { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 12px; font: 500 14px Montserrat,sans-serif; cursor: pointer; transition: border-color .15s, background .15s; }
+        .jur-google:hover { border-color: var(--gold-d); }
+        .jur-or { display: flex; align-items: center; gap: 12px; color: var(--mute); font-size: 13px; margin: 20px 0; }
+        .jur-or:before, .jur-or:after { content: ""; flex: 1; height: 1px; background: var(--line); }
+        .jur-seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+        .jur-seg label { text-align: center; padding: 0; border-radius: 9px; cursor: pointer; font-weight: 500; font-size: 14px; color: var(--mute); transition: background .15s, color .15s; margin: 0; }
+        .jur-seg input { position: absolute; opacity: 0; pointer-events: none; }
+        .jur-seg input:checked+span { background: var(--gold); color: var(--on-gold); }
+        .jur-seg span { display: block; padding: 10px 8px; border-radius: 9px; }
+        .jur-seg input:focus-visible+span { outline: 2px solid var(--gold-d); outline-offset: 2px; }
+        .jur-field { margin-bottom: 16px; text-align: left; }
+        .jur-field label { display: block; font-weight: 500; font-size: 13px; margin-bottom: 6px; color: var(--ink); }
+        .jur-inp { position: relative; }
+        .jur-inp input { width: 100%; box-sizing: border-box; padding: 13px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); font: 400 15px Montserrat,sans-serif; transition: border-color .15s, box-shadow .15s; outline: none; }
+        .jur-inp input::placeholder { color: var(--mute); opacity: .7; }
+        .jur-inp input:focus { outline: none; border-color: var(--gold-d); box-shadow: 0 0 0 3px rgba(207,176,78,.3); }
+        .jur-field.bad input { border-color: var(--err); }
+        .jur-field.good input { border-color: var(--ok); }
+        .jur-msg { font-size: 12.5px; min-height: 18px; margin-top: 5px; color: var(--err); text-align: left; }
+        .jur-eye { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: none; color: var(--mute); padding: 8px; cursor: pointer; font: 500 12px Montserrat,sans-serif; }
+        .jur-eye:focus-visible { outline: 2px solid var(--gold-d); border-radius: 8px; }
+        .jur-meter { display: flex; gap: 4px; margin-top: 8px; }
+        .jur-meter b { flex: 1; height: 4px; border-radius: 2px; background: var(--line); transition: background .2s; }
+        .jur-hint { font-size: 12.5px; color: var(--mute); margin-top: 5px; text-align: left; }
+        .jur-chk { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--mute); margin: 18px 0 6px; text-align: left; cursor: pointer; }
+        .jur-chk input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--gold-d); flex: none; cursor: pointer; }
+        .jur-chk a { color: var(--gold-d); font-weight: 500; text-decoration: none; }
+        .jur-chk a:hover { text-decoration: underline; }
+        .jur-robot { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 12px 14px; margin: 14px 0 18px; font-size: 14px; cursor: pointer; text-align: left; }
+        .jur-robot input { width: 20px; height: 20px; accent-color: var(--gold-d); cursor: pointer; }
+        .jur-robot label { cursor: pointer; color: var(--ink); margin: 0; font-weight: 400; }
+        .jur-robot small { margin-left: auto; color: var(--mute); font-size: 11px; }
+        .jur-cta { width: 100%; padding: 15px; border: 0; border-radius: 12px; background: var(--gold); color: var(--on-gold); font: 600 15px Montserrat,sans-serif; cursor: pointer; transition: filter .15s, transform .1s; }
+        .jur-cta:hover { filter: brightness(1.06); }
+        .jur-cta:active { transform: scale(.99); }
+        .jur-cta:disabled { opacity: .55; cursor: not-allowed; }
+        .jur-cta:focus-visible, .jur-google:focus-visible { outline: 2px solid var(--gold-d); outline-offset: 3px; }
+        .jur-foot { text-align: center; color: var(--mute); margin-top: 16px; margin-bottom: 0; font-size: 14px; }
+        .jur-foot a { color: var(--gold-d); font-weight: 600; text-decoration: none; cursor: pointer; background: transparent; border: 0; font-size: inherit; }
+        .jur-foot a:hover { text-decoration: underline; }
+        @media (max-width:480px){.jur-card{padding:28px 20px;border-radius:20px}}
+      `}</style>
+
+      <div className="jur-card">
         <button
           type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            onClose()
-          }}
-          className="absolute top-[14px] right-[14px] w-[36px] h-[36px] rounded-full border-0 bg-transparent text-[#A9A5C4] hover:bg-[#3A3470]/50 hover:text-[#F3EFE2] focus-visible:outline-2 focus-visible:outline-[#E0C46A] flex items-center justify-center text-[16px] cursor-pointer z-50 pointer-events-auto transition-colors"
-          aria-label="Close modal"
+          className="jur-x"
+          onClick={onClose}
+          aria-label="Close"
         >
           &#10005;
         </button>
 
         {!isRegistered ? (
-          <div className="relative z-10 flex-1 flex flex-col justify-between">
-            {/* Museum Header from Reference */}
-            <div className="text-center mb-[24px]">
-              <div
-                className="flex items-center justify-center gap-[10px] text-[11px] font-semibold tracking-[0.3em] uppercase text-[#E0C46A]"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                <span className="w-[5px] h-[5px] rounded-full bg-[#CFB04E]" />
-                <span>The Living Gallery</span>
-                <span className="w-[5px] h-[5px] rounded-full bg-[#CFB04E]" />
-              </div>
-
-              <h1
-                className="text-[46px] font-bold text-[#F3EFE2] tracking-[-0.01em] leading-[1.05] mt-[10px] mb-[6px]"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-              >
-                JOIN US
-              </h1>
-
-              <p
-                className="text-[15px] leading-[1.5] text-[#A9A5C4] m-0 font-normal"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Enter your details to get access
-              </p>
-
-              {/* Decorative Subtle Ornament from Reference */}
-              <div className="flex items-center justify-center gap-[10px] mt-[14px]">
-                <span className="w-[56px] h-[1px] bg-[#3A3470]" />
-                <b className="w-[6px] h-[6px] bg-[#CFB04E] rotate-45 block" />
-                <span className="w-[56px] h-[1px] bg-[#3A3470]" />
+          <form onSubmit={handleSubmit} noValidate>
+            <div className="jur-hd">
+              <div className="jur-eyebrow">The Living Gallery</div>
+              <h1>JOIN US</h1>
+              <p className="jur-sub">Enter your details to get access</p>
+              <div className="jur-orn">
+                <span></span>
+                <b></b>
+                <span></span>
               </div>
             </div>
 
-            {/* Registration Form replicating ref/joinusref.html */}
-            <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col justify-between">
-              <div>
-                {/* 1. Full Name */}
-                <div className="mb-[16px]">
-                  <label
-                    htmlFor="join-name"
-                    className="block text-[13px] font-medium text-[#F3EFE2] mb-[6px] text-left"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="join-name"
-                      type="text"
-                      autoComplete="name"
-                      value={fullName}
-                      onChange={(e) => {
-                        setFullName(e.target.value)
-                        if (nameError) setNameError('')
-                      }}
-                      placeholder="e.g. Ananya Rao"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#F3EFE2] bg-[#120E36] placeholder-[#A9A5C4]/60 outline-none transition-all ${
-                        nameError
-                          ? 'border-[#FF8F87] focus:ring-2 focus:ring-[#FF8F87]/20'
-                          : 'border-[#3A3470] focus:border-[#E0C46A] focus:ring-3 focus:ring-[#CFB04E]/30'
-                      }`}
-                    />
-                  </div>
-                  {nameError && (
-                    <div
-                      className="text-[12.5px] text-[#FF8F87] mt-[5px] text-left min-h-[18px]"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      {nameError}
-                    </div>
-                  )}
-                </div>
-
-                {/* 2. Email Address */}
-                <div className="mb-[16px]">
-                  <label
-                    htmlFor="join-email"
-                    className="block text-[13px] font-medium text-[#F3EFE2] mb-[6px] text-left"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    Email address
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="join-email"
-                      type="email"
-                      autoComplete="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value)
-                        if (emailError) setEmailError('')
-                      }}
-                      placeholder="you@example.com"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#F3EFE2] bg-[#120E36] placeholder-[#A9A5C4]/60 outline-none transition-all ${
-                        emailError
-                          ? 'border-[#FF8F87] focus:ring-2 focus:ring-[#FF8F87]/20'
-                          : 'border-[#3A3470] focus:border-[#E0C46A] focus:ring-3 focus:ring-[#CFB04E]/30'
-                      }`}
-                    />
-                  </div>
-                  {emailError && (
-                    <div
-                      className="text-[12.5px] text-[#FF8F87] mt-[5px] text-left min-h-[18px]"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      {emailError}
-                    </div>
-                  )}
-                </div>
-
-                {/* 3. Password + Meter + Hint */}
-                <div className="mb-[16px]">
-                  <label
-                    htmlFor="join-pw"
-                    className="block text-[13px] font-medium text-[#F3EFE2] mb-[6px] text-left"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    Password
-                  </label>
-                  <div className="relative flex items-center">
-                    <input
-                      id="join-pw"
-                      type={showPassword ? 'text' : 'password'}
-                      autoComplete="new-password"
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value)
-                        if (pwError) setPwError('')
-                      }}
-                      placeholder="At least 8 characters"
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        paddingRight: '64px',
-                      }}
-                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#F3EFE2] bg-[#120E36] placeholder-[#A9A5C4]/60 outline-none transition-all ${
-                        pwError
-                          ? 'border-[#FF8F87] focus:ring-2 focus:ring-[#FF8F87]/20'
-                          : 'border-[#3A3470] focus:border-[#E0C46A] focus:ring-3 focus:ring-[#CFB04E]/30'
-                      }`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-[6px] top-1/2 -translate-y-1/2 border-0 bg-transparent text-[#A9A5C4] hover:text-[#F3EFE2] focus-visible:outline-2 focus-visible:outline-[#E0C46A] rounded-[8px] p-[8px] text-[12px] font-medium cursor-pointer transition-colors select-none"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
-                    >
-                      {showPassword ? 'Hide' : 'Show'}
-                    </button>
-                  </div>
-
-                  {/* Password Strength Meter */}
-                  <div className="flex gap-[4px] mt-[8px]" aria-hidden="true">
-                    {[0, 1, 2, 3].map((idx) => {
-                      const activeColor =
-                        password && idx < pwStrength ? meterColors[pwStrength - 1] : '#3A3470'
-                      return (
-                        <b
-                          key={idx}
-                          className="flex-1 h-[4px] rounded-[2px] transition-colors duration-200 block"
-                          style={{ backgroundColor: activeColor }}
-                        />
-                      )
-                    })}
-                  </div>
-
-                  <div
-                    className="text-[12.5px] text-[#A9A5C4] mt-[5px] text-left"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    Use 8+ characters with a number and a capital letter.
-                  </div>
-
-                  {pwError && (
-                    <div
-                      className="text-[12.5px] text-[#FF8F87] mt-[5px] text-left min-h-[18px]"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      {pwError}
-                    </div>
-                  )}
-                </div>
-
-                {/* 4. Segmented Role Selector */}
-                <div
-                  className="grid grid-cols-2 bg-[#120E36] border border-[#3A3470] rounded-[12px] p-[4px] mb-[20px]"
-                  role="radiogroup"
-                  aria-label="Account type"
-                >
-                  <label className="cursor-pointer text-center p-0">
-                    <input
-                      type="radio"
-                      name="role"
-                      value="collector"
-                      checked={userType === 'collector'}
-                      onChange={() => setUserType('collector')}
-                      className="sr-only"
-                    />
-                    <span
-                      className={`block text-center py-[10px] px-[8px] rounded-[9px] text-[14px] font-medium transition-all duration-150 ${
-                        userType === 'collector'
-                          ? 'bg-[#CFB04E] text-[#17123F]'
-                          : 'text-[#A9A5C4] hover:text-[#F3EFE2]'
-                      }`}
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      Art lover / collector
-                    </span>
-                  </label>
-
-                  <label className="cursor-pointer text-center p-0">
-                    <input
-                      type="radio"
-                      name="role"
-                      value="artist"
-                      checked={userType === 'artist'}
-                      onChange={() => setUserType('artist')}
-                      className="sr-only"
-                    />
-                    <span
-                      className={`block text-center py-[10px] px-[8px] rounded-[9px] text-[14px] font-medium transition-all duration-150 ${
-                        userType === 'artist'
-                          ? 'bg-[#CFB04E] text-[#17123F]'
-                          : 'text-[#A9A5C4] hover:text-[#F3EFE2]'
-                      }`}
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      Artist
-                    </span>
-                  </label>
-                </div>
-
-                {/* 5. reCAPTCHA Section */}
-                <div
-                  onClick={handleCaptchaClick}
-                  className="flex items-center gap-[12px] border border-[#3A3470] bg-[#120E36] rounded-[12px] px-[14px] py-[12px] mt-[14px] mb-[18px] text-[14px] text-[#F3EFE2] cursor-pointer select-none"
-                >
-                  <input
-                    type="checkbox"
-                    id="join-recaptcha"
-                    checked={captchaVerified}
-                    onChange={handleCaptchaClick}
-                    className="w-[20px] h-[20px] accent-[#E0C46A] cursor-pointer"
-                  />
-                  <label
-                    htmlFor="join-recaptcha"
-                    className="cursor-pointer font-normal text-[#F3EFE2] text-[14px]"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {isCaptchaChecking ? 'Verifying…' : "I'm not a robot"}
-                  </label>
-                  <small
-                    className="ml-auto text-[#A9A5C4] text-[11px] font-normal"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    reCAPTCHA
-                  </small>
-                </div>
-
-                {/* 6. Terms & Privacy Checkbox */}
-                <label className="flex gap-[10px] items-start text-[13px] text-[#A9A5C4] mt-[18px] mb-[6px] cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={acceptedTerms}
-                    onChange={(e) => {
-                      setAcceptedTerms(e.target.checked)
-                      if (termsError) setTermsError('')
-                    }}
-                    className="w-[18px] h-[18px] mt-[1px] accent-[#E0C46A] flex-none cursor-pointer"
-                  />
-                  <span
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    className="leading-normal text-left"
-                  >
-                    By registering, I accept the{' '}
-                    <span className="text-[#E0C46A] font-medium hover:underline">
-                      Terms &amp; Conditions
-                    </span>{' '}
-                    &amp;{' '}
-                    <span className="text-[#E0C46A] font-medium hover:underline">
-                      Privacy Policy
-                    </span>{' '}
-                    of Zigguratss Artwork LLP.
-                  </span>
-                </label>
-
-                {termsError && (
-                  <div
-                    className="text-[12.5px] text-[#FF8F87] mt-0 mb-[12px] text-left"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {termsError}
-                  </div>
-                )}
+            <div className={`jur-field ${nameError ? 'bad' : fullName.trim().length >= 2 ? 'good' : ''}`}>
+              <label htmlFor="jur-name">Full Name</label>
+              <div className="jur-inp">
+                <input
+                  id="jur-name"
+                  autoComplete="name"
+                  value={fullName}
+                  onChange={(e) => {
+                    setFullName(e.target.value)
+                    if (nameError) setNameError('')
+                  }}
+                  placeholder="e.g. Ananya Rao"
+                />
               </div>
+              <div className="jur-msg">{nameError}</div>
+            </div>
 
-              {/* 7. Action CTA Buttons & Footer */}
-              <div>
-                <button
-                  type="submit"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  className="w-full p-[15px] border-0 rounded-[12px] bg-[#CFB04E] hover:brightness-105 active:scale-[0.99] text-[#17123F] font-semibold text-[15px] cursor-pointer transition-all duration-150"
-                >
-                  Create account
-                </button>
+            <div className={`jur-field ${emailError ? 'bad' : /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()) ? 'good' : ''}`}>
+              <label htmlFor="jur-email">Email address</label>
+              <div className="jur-inp">
+                <input
+                  id="jur-email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (emailError) setEmailError('')
+                  }}
+                  placeholder="you@example.com"
+                />
+              </div>
+              <div className="jur-msg">{emailError}</div>
+            </div>
 
-                {/* OR Separator */}
-                <div
-                  className="flex items-center gap-[12px] text-[#A9A5C4] text-[13px] my-[20px]"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  <span className="flex-1 h-[1px] bg-[#3A3470]" />
-                  <span>OR</span>
-                  <span className="flex-1 h-[1px] bg-[#3A3470]" />
-                </div>
-
-                {/* Google Button */}
+            <div className={`jur-field ${pwError ? 'bad' : password.length >= 8 && /\d/.test(password) && /[A-Z]/.test(password) ? 'good' : ''}`}>
+              <label htmlFor="jur-pw">Password</label>
+              <div className="jur-inp">
+                <input
+                  id="jur-pw"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    if (pwError) setPwError('')
+                  }}
+                  placeholder="At least 8 characters"
+                  style={{ paddingRight: '64px' }}
+                />
                 <button
                   type="button"
-                  onClick={handleGoogleJoin}
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  className="w-full flex items-center justify-center gap-[10px] p-[13px] border border-[#3A3470] bg-[#120E36] hover:border-[#E0C46A] rounded-[12px] text-[#F3EFE2] font-medium text-[14px] cursor-pointer transition-all duration-150"
+                  className="jur-eye"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true" className="flex-shrink-0">
-                    <path
-                      fill="#EA4335"
-                      d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"
-                    />
-                    <path
-                      fill="#4285F4"
-                      d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 7.1-10 7.1-17.5z"
-                    />
-                    <path
-                      fill="#FBBC05"
-                      d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"
-                    />
-                    <path
-                      fill="#34A853"
-                      d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"
-                    />
-                  </svg>
-                  <span>Continue with Google</span>
+                  {showPassword ? 'Hide' : 'Show'}
                 </button>
-
-                {/* Footer Link */}
-                <p
-                  className="text-center text-[#A9A5C4] mt-[16px] mb-0 text-[14px]"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  Already a member?{' '}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!fullName) setFullName('Returning Patron')
-                      setIsRegistered(true)
-                    }}
-                    className="text-[#E0C46A] font-semibold hover:underline cursor-pointer bg-transparent border-0 p-0 inline"
-                  >
-                    Log in
-                  </button>
-                </p>
               </div>
-            </form>
-          </div>
+              <div className="jur-meter" aria-hidden="true">
+                {[0, 1, 2, 3].map((idx) => {
+                  const activeColor =
+                    password && idx < pwStrength ? meterColors[pwStrength - 1] : ''
+                  return (
+                    <b
+                      key={idx}
+                      style={{ backgroundColor: activeColor }}
+                    />
+                  )
+                })}
+              </div>
+              <div className="jur-hint">
+                Use 8+ characters with a number and a capital letter.
+              </div>
+              <div className="jur-msg">{pwError}</div>
+            </div>
+
+            <div className="jur-seg" role="radiogroup" aria-label="Account type">
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="collector"
+                  checked={userType === 'collector'}
+                  onChange={() => setUserType('collector')}
+                />
+                <span>Art lover / collector</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="artist"
+                  checked={userType === 'artist'}
+                  onChange={() => setUserType('artist')}
+                />
+                <span>Artist</span>
+              </label>
+            </div>
+
+            <div className="jur-robot" onClick={handleCaptchaClick}>
+              <input
+                type="checkbox"
+                id="jur-rb"
+                checked={captchaVerified}
+                onChange={handleCaptchaClick}
+                aria-label="I'm not a robot"
+              />
+              <label htmlFor="jur-rb">
+                {isCaptchaChecking ? 'Verifying…' : "I'm not a robot"}
+              </label>
+              <small>reCAPTCHA</small>
+            </div>
+
+            <label className="jur-chk">
+              <input
+                type="checkbox"
+                id="jur-tc"
+                checked={acceptedTerms}
+                onChange={(e) => {
+                  setAcceptedTerms(e.target.checked)
+                  if (termsError) setTermsError('')
+                }}
+              />
+              <span>
+                By registering, I accept the{' '}
+                <a href="#" onClick={(e) => e.preventDefault()}>
+                  Terms &amp; Conditions
+                </a>{' '}
+                &amp;{' '}
+                <a href="#" onClick={(e) => e.preventDefault()}>
+                  Privacy Policy
+                </a>{' '}
+                of Zigguratss Artwork LLP.
+              </span>
+            </label>
+            <div className="jur-msg" style={{ margin: '0 0 12px' }}>
+              {termsError}
+            </div>
+
+            <button className="jur-cta" type="submit">
+              Create account
+            </button>
+
+            <div className="jur-or">OR</div>
+
+            <button
+              type="button"
+              className="jur-google"
+              onClick={handleGoogleJoin}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 48 48"
+                aria-hidden="true"
+              >
+                <path
+                  fill="#EA4335"
+                  d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"
+                />
+                <path
+                  fill="#4285F4"
+                  d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 7.1-10 7.1-17.5z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"
+                />
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <p className="jur-foot">
+              Already a member?{' '}
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (!fullName) setFullName('Returning Patron')
+                  setIsRegistered(true)
+                }}
+              >
+                Log in
+              </a>
+            </p>
+          </form>
         ) : (
-          /* Confirmation Pass Screen */
           <div className="space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-300 text-center py-4">
             <div className="w-16 h-16 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center mx-auto text-[#10B981]">
               <CheckCircle2 size={38} />
