@@ -102,8 +102,12 @@ function JoinUsModal({
 
         {/* Close Button */}
         <button
-          onClick={onClose}
-          className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2 rounded-full hover:bg-black/5 text-[#66776F] hover:text-[#16221B] transition-colors cursor-pointer z-10"
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+          className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2 rounded-full hover:bg-black/5 active:bg-black/10 text-[#66776F] hover:text-[#16221B] transition-colors cursor-pointer z-50 pointer-events-auto"
           aria-label="Close modal"
         >
           <X size={20} />
