@@ -83,16 +83,16 @@ function JoinUsModal({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-black/70 backdrop-blur-md animate-in fade-in duration-200 select-text overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 select-text overflow-y-auto"
     >
-      <div className="relative w-full max-w-[530px] my-auto bg-[#FAF8F5] rounded-[28px] sm:rounded-[32px] shadow-[0_30px_100px_rgba(0,0,0,0.55),0_0_0_1px_rgba(204,160,48,0.25)] border border-[#E5DDD0] px-7 sm:px-11 py-10 sm:py-12 text-[#16221B] overflow-hidden">
+      <div className="relative w-full max-w-[540px] min-h-[84vh] sm:min-h-[86vh] max-h-[96vh] my-auto bg-[#FAF8F5] rounded-[32px] sm:rounded-[36px] shadow-[0_30px_100px_rgba(0,0,0,0.6),0_0_0_1px_rgba(204,160,48,0.25)] border border-[#E5DDD0] px-7 sm:px-12 py-10 sm:py-14 text-[#16221B] overflow-y-auto custom-scrollbar flex flex-col justify-between">
         {/* Subtle Painterly / Artistic Brushstroke Watermark in Background */}
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br from-[#CCA030]/15 via-[#BD5E3B]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-gradient-to-tr from-[#7E9D8B]/18 via-[#1E362A]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 bg-gradient-to-br from-[#CCA030]/15 via-[#BD5E3B]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-gradient-to-tr from-[#7E9D8B]/18 via-[#1E362A]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
 
         {/* Decorative Painterly Arc SVG Line */}
         <svg
-          className="absolute top-0 right-0 w-44 h-44 text-[#CCA030]/12 pointer-events-none"
+          className="absolute top-0 right-0 w-48 h-48 text-[#CCA030]/12 pointer-events-none"
           viewBox="0 0 100 100"
           fill="none"
         >
@@ -103,20 +103,20 @@ function JoinUsModal({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2.5 rounded-full hover:bg-black/5 text-[#66776F] hover:text-[#16221B] transition-colors cursor-pointer z-10"
+          className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2.5 rounded-full hover:bg-black/5 text-[#66776F] hover:text-[#16221B] transition-colors cursor-pointer z-10"
           aria-label="Close modal"
         >
-          <X size={20} />
+          <X size={22} />
         </button>
 
         {!isRegistered ? (
-          <div className="relative z-10">
+          <div className="relative z-10 flex-1 flex flex-col justify-between">
             {/* Museum Header */}
-            <div className="text-center mb-8 sm:mb-9">
+            <div className="text-center mb-6 sm:mb-8">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#CCA030]" />
                 <span
-                  className="text-[10.5px] sm:text-[11px] tracking-[0.3em] uppercase font-bold text-[#C59A27]"
+                  className="text-[11px] sm:text-[11.5px] tracking-[0.32em] uppercase font-bold text-[#C59A27]"
                   style={{ fontFamily: "'Cinzel', Georgia, serif" }}
                 >
                   THE LIVING GALLERY
@@ -125,14 +125,14 @@ function JoinUsModal({
               </div>
 
               <h2
-                className="text-[36px] sm:text-[42px] font-bold tracking-[0.12em] text-[#16221B] uppercase leading-none"
+                className="text-[40px] sm:text-[46px] font-bold tracking-[0.12em] text-[#16221B] uppercase leading-tight"
                 style={{ fontFamily: "'Cinzel', 'Playfair Display', serif" }}
               >
                 JOIN US
               </h2>
 
               <p
-                className="text-[14px] sm:text-[15px] text-[#55635C] mt-2.5 font-medium tracking-tight"
+                className="text-[15px] sm:text-[16px] text-[#55635C] mt-2 font-medium tracking-tight"
                 style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
               >
                 Enter your details to get access
@@ -140,182 +140,184 @@ function JoinUsModal({
 
               {/* Decorative Subtle Line */}
               <div className="flex items-center justify-center gap-2.5 mt-4">
-                <div className="h-px bg-[#E3DDD3] w-14" />
-                <span className="text-[9px] text-[#CCA030]">◆</span>
-                <div className="h-px bg-[#E3DDD3] w-14" />
+                <div className="h-px bg-[#E3DDD3] w-16" />
+                <span className="text-[10px] text-[#CCA030]">◆</span>
+                <div className="h-px bg-[#E3DDD3] w-16" />
               </div>
             </div>
 
             {/* Registration Form with Elongated Spacing */}
-            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-              {/* Full Name */}
-              <div>
-                <label
-                  className="block text-[13.5px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Full Name"
-                  style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
-                  className="w-full px-4.5 py-3.5 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
-                />
-              </div>
-
-              {/* Email Address */}
-              <div>
-                <label
-                  className="block text-[13.5px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
-                  className="w-full px-4.5 py-3.5 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
-                />
-              </div>
-
-              {/* Password with Show/Hide Toggle */}
-              <div>
-                <label
-                  className="block text-[13.5px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  Password
-                </label>
-                <div className="relative flex items-center">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
-                    className="w-full px-4.5 py-3.5 pr-12 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 text-[#55635C] hover:text-[#16221B] cursor-pointer p-1 transition-colors"
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  >
-                    {showPassword ? <Eye size={19} /> : <EyeOff size={19} />}
-                  </button>
-                </div>
-              </div>
-
-              {/* User Type Selection Radio */}
-              <div
-                className="flex flex-col sm:flex-row sm:items-center gap-3.5 sm:gap-7 pt-1 text-[13.5px] text-[#334239]"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-              >
-                <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="collector"
-                    checked={userType === 'collector'}
-                    onChange={() => setUserType('collector')}
-                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB] cursor-pointer"
-                  />
-                  <span className="font-medium">I am an art lover, a collector</span>
-                </label>
-                <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="artist"
-                    checked={userType === 'artist'}
-                    onChange={() => setUserType('artist')}
-                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB] cursor-pointer"
-                  />
-                  <span className="font-medium">I am an artist</span>
-                </label>
-              </div>
-
-              {/* reCAPTCHA Verification Component */}
-              <div className="pt-1.5">
-                <div className="flex items-center justify-between bg-white border border-[#DDD5C7] rounded-2xl px-4 py-3 w-full sm:w-[285px] shadow-2xs select-none">
-                  <div
-                    className="flex items-center gap-3.5 cursor-pointer"
-                    onClick={handleCaptchaClick}
-                  >
-                    <div
-                      className={`w-6 h-6 rounded-[5px] border-2 transition-all flex items-center justify-center ${
-                        captchaVerified
-                          ? 'bg-[#10B981] border-[#10B981] text-white'
-                          : isCaptchaChecking
-                          ? 'border-[#3B82F6] animate-pulse'
-                          : 'bg-white border-[#C1C7CD] hover:border-[#9CA3AF]'
-                      }`}
-                    >
-                      {captchaVerified && (
-                        <Check size={16} strokeWidth={3} className="text-white" />
-                      )}
-                      {isCaptchaChecking && (
-                        <div className="w-3.5 h-3.5 border-2 border-[#3B82F6] border-t-transparent rounded-full animate-spin" />
-                      )}
-                    </div>
-                    <span
-                      className="text-[13.5px] font-semibold text-[#111827]"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                    >
-                      I'm not a robot
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center pl-2">
-                    <svg className="w-7 h-7 text-[#1A73E8]" viewBox="0 0 48 48" fill="none">
-                      <path
-                        d="M24 8V2L16 10L24 18V12C30.63 12 36 17.37 36 24C36 26.04 35.48 27.96 34.58 29.64L37.52 32.58C39.08 30.06 40 27.14 40 24C40 15.16 32.84 8 24 8ZM24 36C17.37 36 12 30.63 12 24C12 21.96 12.52 20.04 13.42 18.36L10.48 15.42C8.92 17.94 8 20.86 8 24C8 32.84 15.16 40 24 40V46L32 38L24 30V36Z"
-                        fill="#1A73E8"
-                      />
-                    </svg>
-                    <span className="text-[8px] text-[#555555] tracking-tight font-sans mt-0.5 font-medium">
-                      reCAPTCHA
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Terms and Privacy Policy Checkbox */}
-              <div className="pt-1.5">
-                <label className="flex items-start gap-3 cursor-pointer select-none">
-                  <div
-                    onClick={() => setAcceptedTerms(!acceptedTerms)}
-                    className={`w-[19px] h-[19px] rounded-[4px] flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
-                      acceptedTerms
-                        ? 'bg-[#CCA030] text-white'
-                        : 'border border-[#DDD5C7] bg-white text-transparent'
-                    }`}
-                  >
-                    <Check size={13} strokeWidth={3.5} />
-                  </div>
-                  <span
-                    className="text-[12.5px] sm:text-[13px] text-[#55635C] font-normal leading-relaxed"
+            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 flex-1 flex flex-col justify-between">
+              <div className="space-y-5 sm:space-y-6">
+                {/* Full Name */}
+                <div>
+                  <label
+                    className="block text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                   >
-                    By Registering, I Accept The Terms & Conditions & Privacy Policy Of Zigguratss Artwork LLP.
-                  </span>
-                </label>
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Full Name"
+                    style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
+                    className="w-full px-5 py-4 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
+                  />
+                </div>
+
+                {/* Email Address */}
+                <div>
+                  <label
+                    className="block text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
+                    className="w-full px-5 py-4 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
+                  />
+                </div>
+
+                {/* Password with Show/Hide Toggle */}
+                <div>
+                  <label
+                    className="block text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    Password
+                  </label>
+                  <div className="relative flex items-center">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Password"
+                      style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
+                      className="w-full px-5 py-4 pr-13 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 text-[#55635C] hover:text-[#16221B] cursor-pointer p-1.5 transition-colors"
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* User Type Selection Radio */}
+                <div
+                  className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-7 pt-1 text-[14px] text-[#334239]"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
+                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                    <input
+                      type="radio"
+                      name="userType"
+                      value="collector"
+                      checked={userType === 'collector'}
+                      onChange={() => setUserType('collector')}
+                      className="w-4.5 h-4.5 text-[#2563EB] accent-[#2563EB] cursor-pointer"
+                    />
+                    <span className="font-medium">I am an art lover, a collector</span>
+                  </label>
+                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                    <input
+                      type="radio"
+                      name="userType"
+                      value="artist"
+                      checked={userType === 'artist'}
+                      onChange={() => setUserType('artist')}
+                      className="w-4.5 h-4.5 text-[#2563EB] accent-[#2563EB] cursor-pointer"
+                    />
+                    <span className="font-medium">I am an artist</span>
+                  </label>
+                </div>
+
+                {/* reCAPTCHA Verification Component */}
+                <div className="pt-1">
+                  <div className="flex items-center justify-between bg-white border border-[#DDD5C7] rounded-2xl px-4.5 py-3.5 w-full sm:w-[290px] shadow-2xs select-none">
+                    <div
+                      className="flex items-center gap-3.5 cursor-pointer"
+                      onClick={handleCaptchaClick}
+                    >
+                      <div
+                        className={`w-6.5 h-6.5 rounded-[5px] border-2 transition-all flex items-center justify-center ${
+                          captchaVerified
+                            ? 'bg-[#10B981] border-[#10B981] text-white'
+                            : isCaptchaChecking
+                            ? 'border-[#3B82F6] animate-pulse'
+                            : 'bg-white border-[#C1C7CD] hover:border-[#9CA3AF]'
+                        }`}
+                      >
+                        {captchaVerified && (
+                          <Check size={17} strokeWidth={3} className="text-white" />
+                        )}
+                        {isCaptchaChecking && (
+                          <div className="w-4 h-4 border-2 border-[#3B82F6] border-t-transparent rounded-full animate-spin" />
+                        )}
+                      </div>
+                      <span
+                        className="text-[14px] font-semibold text-[#111827]"
+                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                      >
+                        I'm not a robot
+                      </span>
+                    </div>
+                    <div className="flex flex-col items-center justify-center pl-2">
+                      <svg className="w-7 h-7 text-[#1A73E8]" viewBox="0 0 48 48" fill="none">
+                        <path
+                          d="M24 8V2L16 10L24 18V12C30.63 12 36 17.37 36 24C36 26.04 35.48 27.96 34.58 29.64L37.52 32.58C39.08 30.06 40 27.14 40 24C40 15.16 32.84 8 24 8ZM24 36C17.37 36 12 30.63 12 24C12 21.96 12.52 20.04 13.42 18.36L10.48 15.42C8.92 17.94 8 20.86 8 24C8 32.84 15.16 40 24 40V46L32 38L24 30V36Z"
+                          fill="#1A73E8"
+                        />
+                      </svg>
+                      <span className="text-[8px] text-[#555555] tracking-tight font-sans mt-0.5 font-medium">
+                        reCAPTCHA
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Terms and Privacy Policy Checkbox */}
+                <div className="pt-1">
+                  <label className="flex items-start gap-3 cursor-pointer select-none">
+                    <div
+                      onClick={() => setAcceptedTerms(!acceptedTerms)}
+                      className={`w-[20px] h-[20px] rounded-[4px] flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
+                        acceptedTerms
+                          ? 'bg-[#CCA030] text-white'
+                          : 'border border-[#DDD5C7] bg-white text-transparent'
+                      }`}
+                    >
+                      <Check size={14} strokeWidth={3.5} />
+                    </div>
+                    <span
+                      className="text-[13px] sm:text-[13.5px] text-[#55635C] font-normal leading-relaxed"
+                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    >
+                      By Registering, I Accept The Terms & Conditions & Privacy Policy Of Zigguratss Artwork LLP.
+                    </span>
+                  </label>
+                </div>
               </div>
 
               {/* Vertical / Stacked Action Buttons */}
-              <div className="space-y-3.5 pt-3 sm:pt-4">
+              <div className="space-y-4 pt-6 sm:pt-8">
                 <button
                   type="submit"
                   style={{ fontFamily: "'Cinzel', 'Plus Jakarta Sans', sans-serif" }}
-                  className="w-full bg-gradient-to-r from-[#D4A838] via-[#CCA030] to-[#B88F28] hover:from-[#CCA030] hover:to-[#A68020] text-white py-4 px-6 rounded-full font-bold text-[14px] uppercase tracking-[0.16em] cursor-pointer shadow-[0_6px_22px_rgba(204,160,48,0.35)] hover:shadow-[0_8px_28px_rgba(204,160,48,0.45)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 text-center"
+                  className="w-full bg-gradient-to-r from-[#D4A838] via-[#CCA030] to-[#B88F28] hover:from-[#CCA030] hover:to-[#A68020] text-white py-4.5 px-6 rounded-full font-bold text-[15px] uppercase tracking-[0.16em] cursor-pointer shadow-[0_6px_24px_rgba(204,160,48,0.38)] hover:shadow-[0_8px_30px_rgba(204,160,48,0.48)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 text-center"
                 >
                   JOIN US
                 </button>
@@ -324,7 +326,7 @@ function JoinUsModal({
                 <div className="flex items-center gap-3.5 py-1">
                   <div className="h-px bg-[#E3DDD3] flex-1" />
                   <span
-                    className="text-[11px] uppercase tracking-[0.24em] text-[#788880] font-bold"
+                    className="text-[11.5px] uppercase tracking-[0.24em] text-[#788880] font-bold"
                     style={{ fontFamily: "'Cinzel', serif" }}
                   >
                     OR
@@ -336,10 +338,10 @@ function JoinUsModal({
                   type="button"
                   onClick={handleGoogleJoin}
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                  className="w-full bg-white hover:bg-[#F3EFEA] border border-[#DDD5C7] text-[#223128] py-3.5 px-6 rounded-full text-[14px] font-semibold flex items-center justify-center gap-3 cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all shadow-2xs"
+                  className="w-full bg-white hover:bg-[#F3EFEA] border border-[#DDD5C7] text-[#223128] py-4 px-6 rounded-full text-[14.5px] font-semibold flex items-center justify-center gap-3 cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all shadow-2xs"
                 >
                   {/* Google Multicolor 'G' Icon */}
-                  <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-5.5 h-5.5 flex-shrink-0" viewBox="0 0 24 24">
                     <path
                       fill="#4285F4"
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
