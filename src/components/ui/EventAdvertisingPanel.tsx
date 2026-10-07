@@ -121,7 +121,7 @@ function JoinUsModal({
   if (/[A-Z]/.test(password)) pwStrength++
   if (/\d/.test(password)) pwStrength++
   if (/[^A-Za-z0-9]/.test(password) || password.length >= 12) pwStrength++
-  const meterColors = ['#B3261E', '#D9822B', '#CFB04E', '#2E7D4F']
+  const meterColors = ['#FF8F87', '#D9822B', '#CFB04E', '#7BD49C']
 
   return (
     <div
@@ -130,23 +130,11 @@ function JoinUsModal({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 select-text overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 select-text overflow-y-auto"
     >
-      <div className="relative w-full max-w-[460px] my-auto bg-[#FAF8F5] rounded-[28px] shadow-[0_30px_80px_rgba(23,18,63,0.28)] border border-[#E5DDD0] p-[36px_32px] text-[#17123F] overflow-y-auto custom-scrollbar flex flex-col justify-between">
-        {/* Subtle Painterly / Artistic Brushstroke Watermark in Background */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-gradient-to-br from-[#CCA030]/15 via-[#BD5E3B]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-gradient-to-tr from-[#7E9D8B]/18 via-[#1E362A]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
-
-        {/* Decorative Painterly Arc SVG Line */}
-        <svg
-          className="absolute top-0 right-0 w-48 h-48 text-[#CCA030]/12 pointer-events-none"
-          viewBox="0 0 100 100"
-          fill="none"
-        >
-          <circle cx="100" cy="0" r="85" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" />
-          <circle cx="100" cy="0" r="65" stroke="currentColor" strokeWidth="1" />
-        </svg>
-
+      <div
+        className="relative w-full max-w-[460px] my-auto bg-[#1A1547]/95 backdrop-blur-xl rounded-[28px] shadow-[0_30px_80px_rgba(15,12,43,0.6)] border border-[#3A3470]/80 p-[36px_32px] text-[#F3EFE2] overflow-y-auto custom-scrollbar flex flex-col justify-between"
+      >
         {/* Close Button */}
         <button
           type="button"
@@ -154,7 +142,7 @@ function JoinUsModal({
             e.stopPropagation()
             onClose()
           }}
-          className="absolute top-[14px] right-[14px] w-[36px] h-[36px] rounded-full border-0 bg-transparent text-[#6B6785] hover:bg-[#DED9CC] hover:text-[#17123F] focus-visible:outline-2 focus-visible:outline-[#9A7B1F] flex items-center justify-center text-[16px] cursor-pointer z-50 pointer-events-auto transition-colors"
+          className="absolute top-[14px] right-[14px] w-[36px] h-[36px] rounded-full border-0 bg-transparent text-[#A9A5C4] hover:bg-[#3A3470]/50 hover:text-[#F3EFE2] focus-visible:outline-2 focus-visible:outline-[#E0C46A] flex items-center justify-center text-[16px] cursor-pointer z-50 pointer-events-auto transition-colors"
           aria-label="Close modal"
         >
           &#10005;
@@ -165,7 +153,7 @@ function JoinUsModal({
             {/* Museum Header from Reference */}
             <div className="text-center mb-[24px]">
               <div
-                className="flex items-center justify-center gap-[10px] text-[11px] font-semibold tracking-[0.3em] uppercase text-[#9A7B1F]"
+                className="flex items-center justify-center gap-[10px] text-[11px] font-semibold tracking-[0.3em] uppercase text-[#E0C46A]"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 <span className="w-[5px] h-[5px] rounded-full bg-[#CFB04E]" />
@@ -174,14 +162,14 @@ function JoinUsModal({
               </div>
 
               <h1
-                className="text-[46px] font-bold text-[#17123F] tracking-[-0.01em] leading-[1.05] mt-[10px] mb-[6px]"
+                className="text-[46px] font-bold text-[#F3EFE2] tracking-[-0.01em] leading-[1.05] mt-[10px] mb-[6px]"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
               >
                 JOIN US
               </h1>
 
               <p
-                className="text-[15px] leading-[1.5] text-[#6B6785] m-0 font-normal"
+                className="text-[15px] leading-[1.5] text-[#A9A5C4] m-0 font-normal"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 Enter your details to get access
@@ -189,9 +177,9 @@ function JoinUsModal({
 
               {/* Decorative Subtle Ornament from Reference */}
               <div className="flex items-center justify-center gap-[10px] mt-[14px]">
-                <span className="w-[56px] h-[1px] bg-[#DED9CC]" />
+                <span className="w-[56px] h-[1px] bg-[#3A3470]" />
                 <b className="w-[6px] h-[6px] bg-[#CFB04E] rotate-45 block" />
-                <span className="w-[56px] h-[1px] bg-[#DED9CC]" />
+                <span className="w-[56px] h-[1px] bg-[#3A3470]" />
               </div>
             </div>
 
@@ -202,7 +190,7 @@ function JoinUsModal({
                 <div className="mb-[16px]">
                   <label
                     htmlFor="join-name"
-                    className="block text-[13px] font-medium text-[#17123F] mb-[6px] text-left"
+                    className="block text-[13px] font-medium text-[#F3EFE2] mb-[6px] text-left"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     Full Name
@@ -219,16 +207,16 @@ function JoinUsModal({
                       }}
                       placeholder="e.g. Ananya Rao"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#17123F] bg-[#FBF8F2] placeholder-[#6B6785]/70 outline-none transition-all ${
+                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#F3EFE2] bg-[#120E36] placeholder-[#A9A5C4]/60 outline-none transition-all ${
                         nameError
-                          ? 'border-[#B3261E] focus:ring-2 focus:ring-[#B3261E]/20'
-                          : 'border-[#DED9CC] focus:border-[#9A7B1F] focus:ring-3 focus:ring-[#CFB04E]/30'
+                          ? 'border-[#FF8F87] focus:ring-2 focus:ring-[#FF8F87]/20'
+                          : 'border-[#3A3470] focus:border-[#E0C46A] focus:ring-3 focus:ring-[#CFB04E]/30'
                       }`}
                     />
                   </div>
                   {nameError && (
                     <div
-                      className="text-[12.5px] text-[#B3261E] mt-[5px] text-left min-h-[18px]"
+                      className="text-[12.5px] text-[#FF8F87] mt-[5px] text-left min-h-[18px]"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       {nameError}
@@ -240,7 +228,7 @@ function JoinUsModal({
                 <div className="mb-[16px]">
                   <label
                     htmlFor="join-email"
-                    className="block text-[13px] font-medium text-[#17123F] mb-[6px] text-left"
+                    className="block text-[13px] font-medium text-[#F3EFE2] mb-[6px] text-left"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     Email address
@@ -257,16 +245,16 @@ function JoinUsModal({
                       }}
                       placeholder="you@example.com"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
-                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#17123F] bg-[#FBF8F2] placeholder-[#6B6785]/70 outline-none transition-all ${
+                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#F3EFE2] bg-[#120E36] placeholder-[#A9A5C4]/60 outline-none transition-all ${
                         emailError
-                          ? 'border-[#B3261E] focus:ring-2 focus:ring-[#B3261E]/20'
-                          : 'border-[#DED9CC] focus:border-[#9A7B1F] focus:ring-3 focus:ring-[#CFB04E]/30'
+                          ? 'border-[#FF8F87] focus:ring-2 focus:ring-[#FF8F87]/20'
+                          : 'border-[#3A3470] focus:border-[#E0C46A] focus:ring-3 focus:ring-[#CFB04E]/30'
                       }`}
                     />
                   </div>
                   {emailError && (
                     <div
-                      className="text-[12.5px] text-[#B3261E] mt-[5px] text-left min-h-[18px]"
+                      className="text-[12.5px] text-[#FF8F87] mt-[5px] text-left min-h-[18px]"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       {emailError}
@@ -278,7 +266,7 @@ function JoinUsModal({
                 <div className="mb-[16px]">
                   <label
                     htmlFor="join-pw"
-                    className="block text-[13px] font-medium text-[#17123F] mb-[6px] text-left"
+                    className="block text-[13px] font-medium text-[#F3EFE2] mb-[6px] text-left"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     Password
@@ -298,16 +286,16 @@ function JoinUsModal({
                         fontFamily: "'Montserrat', sans-serif",
                         paddingRight: '64px',
                       }}
-                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#17123F] bg-[#FBF8F2] placeholder-[#6B6785]/70 outline-none transition-all ${
+                      className={`w-full px-[14px] py-[13px] rounded-[12px] border text-[15px] text-[#F3EFE2] bg-[#120E36] placeholder-[#A9A5C4]/60 outline-none transition-all ${
                         pwError
-                          ? 'border-[#B3261E] focus:ring-2 focus:ring-[#B3261E]/20'
-                          : 'border-[#DED9CC] focus:border-[#9A7B1F] focus:ring-3 focus:ring-[#CFB04E]/30'
+                          ? 'border-[#FF8F87] focus:ring-2 focus:ring-[#FF8F87]/20'
+                          : 'border-[#3A3470] focus:border-[#E0C46A] focus:ring-3 focus:ring-[#CFB04E]/30'
                       }`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-[6px] top-1/2 -translate-y-1/2 border-0 bg-transparent text-[#6B6785] hover:text-[#17123F] focus-visible:outline-2 focus-visible:outline-[#9A7B1F] rounded-[8px] p-[8px] text-[12px] font-medium cursor-pointer transition-colors select-none"
+                      className="absolute right-[6px] top-1/2 -translate-y-1/2 border-0 bg-transparent text-[#A9A5C4] hover:text-[#F3EFE2] focus-visible:outline-2 focus-visible:outline-[#E0C46A] rounded-[8px] p-[8px] text-[12px] font-medium cursor-pointer transition-colors select-none"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
@@ -319,7 +307,7 @@ function JoinUsModal({
                   <div className="flex gap-[4px] mt-[8px]" aria-hidden="true">
                     {[0, 1, 2, 3].map((idx) => {
                       const activeColor =
-                        password && idx < pwStrength ? meterColors[pwStrength - 1] : '#DED9CC'
+                        password && idx < pwStrength ? meterColors[pwStrength - 1] : '#3A3470'
                       return (
                         <b
                           key={idx}
@@ -331,7 +319,7 @@ function JoinUsModal({
                   </div>
 
                   <div
-                    className="text-[12.5px] text-[#6B6785] mt-[5px] text-left"
+                    className="text-[12.5px] text-[#A9A5C4] mt-[5px] text-left"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     Use 8+ characters with a number and a capital letter.
@@ -339,7 +327,7 @@ function JoinUsModal({
 
                   {pwError && (
                     <div
-                      className="text-[12.5px] text-[#B3261E] mt-[5px] text-left min-h-[18px]"
+                      className="text-[12.5px] text-[#FF8F87] mt-[5px] text-left min-h-[18px]"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       {pwError}
@@ -349,7 +337,7 @@ function JoinUsModal({
 
                 {/* 4. Segmented Role Selector */}
                 <div
-                  className="grid grid-cols-2 bg-[#FBF8F2] border border-[#DED9CC] rounded-[12px] p-[4px] mb-[20px]"
+                  className="grid grid-cols-2 bg-[#120E36] border border-[#3A3470] rounded-[12px] p-[4px] mb-[20px]"
                   role="radiogroup"
                   aria-label="Account type"
                 >
@@ -366,7 +354,7 @@ function JoinUsModal({
                       className={`block text-center py-[10px] px-[8px] rounded-[9px] text-[14px] font-medium transition-all duration-150 ${
                         userType === 'collector'
                           ? 'bg-[#CFB04E] text-[#17123F]'
-                          : 'text-[#6B6785] hover:text-[#17123F]'
+                          : 'text-[#A9A5C4] hover:text-[#F3EFE2]'
                       }`}
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
@@ -387,7 +375,7 @@ function JoinUsModal({
                       className={`block text-center py-[10px] px-[8px] rounded-[9px] text-[14px] font-medium transition-all duration-150 ${
                         userType === 'artist'
                           ? 'bg-[#CFB04E] text-[#17123F]'
-                          : 'text-[#6B6785] hover:text-[#17123F]'
+                          : 'text-[#A9A5C4] hover:text-[#F3EFE2]'
                       }`}
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
@@ -399,24 +387,24 @@ function JoinUsModal({
                 {/* 5. reCAPTCHA Section */}
                 <div
                   onClick={handleCaptchaClick}
-                  className="flex items-center gap-[12px] border border-[#DED9CC] bg-[#FBF8F2] rounded-[12px] px-[14px] py-[12px] mt-[14px] mb-[18px] text-[14px] text-[#17123F] cursor-pointer select-none"
+                  className="flex items-center gap-[12px] border border-[#3A3470] bg-[#120E36] rounded-[12px] px-[14px] py-[12px] mt-[14px] mb-[18px] text-[14px] text-[#F3EFE2] cursor-pointer select-none"
                 >
                   <input
                     type="checkbox"
                     id="join-recaptcha"
                     checked={captchaVerified}
                     onChange={handleCaptchaClick}
-                    className="w-[20px] h-[20px] accent-[#9A7B1F] cursor-pointer"
+                    className="w-[20px] h-[20px] accent-[#E0C46A] cursor-pointer"
                   />
                   <label
                     htmlFor="join-recaptcha"
-                    className="cursor-pointer font-normal text-[#17123F] text-[14px]"
+                    className="cursor-pointer font-normal text-[#F3EFE2] text-[14px]"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     {isCaptchaChecking ? 'Verifying…' : "I'm not a robot"}
                   </label>
                   <small
-                    className="ml-auto text-[#6B6785] text-[11px] font-normal"
+                    className="ml-auto text-[#A9A5C4] text-[11px] font-normal"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     reCAPTCHA
@@ -424,7 +412,7 @@ function JoinUsModal({
                 </div>
 
                 {/* 6. Terms & Privacy Checkbox */}
-                <label className="flex gap-[10px] items-start text-[13px] text-[#6B6785] mt-[18px] mb-[6px] cursor-pointer select-none">
+                <label className="flex gap-[10px] items-start text-[13px] text-[#A9A5C4] mt-[18px] mb-[6px] cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={acceptedTerms}
@@ -432,18 +420,18 @@ function JoinUsModal({
                       setAcceptedTerms(e.target.checked)
                       if (termsError) setTermsError('')
                     }}
-                    className="w-[18px] h-[18px] mt-[1px] accent-[#9A7B1F] flex-none cursor-pointer"
+                    className="w-[18px] h-[18px] mt-[1px] accent-[#E0C46A] flex-none cursor-pointer"
                   />
                   <span
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                     className="leading-normal text-left"
                   >
                     By registering, I accept the{' '}
-                    <span className="text-[#9A7B1F] font-medium hover:underline">
+                    <span className="text-[#E0C46A] font-medium hover:underline">
                       Terms &amp; Conditions
                     </span>{' '}
                     &amp;{' '}
-                    <span className="text-[#9A7B1F] font-medium hover:underline">
+                    <span className="text-[#E0C46A] font-medium hover:underline">
                       Privacy Policy
                     </span>{' '}
                     of Zigguratss Artwork LLP.
@@ -452,7 +440,7 @@ function JoinUsModal({
 
                 {termsError && (
                   <div
-                    className="text-[12.5px] text-[#B3261E] mt-0 mb-[12px] text-left"
+                    className="text-[12.5px] text-[#FF8F87] mt-0 mb-[12px] text-left"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     {termsError}
@@ -472,12 +460,12 @@ function JoinUsModal({
 
                 {/* OR Separator */}
                 <div
-                  className="flex items-center gap-[12px] text-[#6B6785] text-[13px] my-[20px]"
+                  className="flex items-center gap-[12px] text-[#A9A5C4] text-[13px] my-[20px]"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-                  <span className="flex-1 h-[1px] bg-[#DED9CC]" />
+                  <span className="flex-1 h-[1px] bg-[#3A3470]" />
                   <span>OR</span>
-                  <span className="flex-1 h-[1px] bg-[#DED9CC]" />
+                  <span className="flex-1 h-[1px] bg-[#3A3470]" />
                 </div>
 
                 {/* Google Button */}
@@ -485,7 +473,7 @@ function JoinUsModal({
                   type="button"
                   onClick={handleGoogleJoin}
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  className="w-full flex items-center justify-center gap-[10px] p-[13px] border border-[#DED9CC] bg-[#FBF8F2] hover:border-[#9A7B1F] rounded-[12px] text-[#17123F] font-medium text-[14px] cursor-pointer transition-all duration-150"
+                  className="w-full flex items-center justify-center gap-[10px] p-[13px] border border-[#3A3470] bg-[#120E36] hover:border-[#E0C46A] rounded-[12px] text-[#F3EFE2] font-medium text-[14px] cursor-pointer transition-all duration-150"
                 >
                   <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true" className="flex-shrink-0">
                     <path
@@ -510,7 +498,7 @@ function JoinUsModal({
 
                 {/* Footer Link */}
                 <p
-                  className="text-center text-[#6B6785] mt-[16px] mb-0 text-[14px]"
+                  className="text-center text-[#A9A5C4] mt-[16px] mb-0 text-[14px]"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   Already a member?{' '}
@@ -520,7 +508,7 @@ function JoinUsModal({
                       if (!fullName) setFullName('Returning Patron')
                       setIsRegistered(true)
                     }}
-                    className="text-[#9A7B1F] font-semibold hover:underline cursor-pointer bg-transparent border-0 p-0 inline"
+                    className="text-[#E0C46A] font-semibold hover:underline cursor-pointer bg-transparent border-0 p-0 inline"
                   >
                     Log in
                   </button>
@@ -536,18 +524,18 @@ function JoinUsModal({
             </div>
 
             <div>
-              <span className="text-xs tracking-[0.25em] uppercase text-[#D4A838] font-bold">
+              <span className="text-xs tracking-[0.25em] uppercase text-[#E0C46A] font-bold">
                 Pass Confirmed · Verified
               </span>
               <h2
-                className="text-2xl sm:text-3xl font-serif text-[#151336] mt-1.5"
+                className="text-2xl sm:text-3xl font-serif text-[#F3EFE2] mt-1.5"
                 style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
               >
                 Welcome, {fullName || 'Patron'}
               </h2>
-              <p className="text-sm text-[#6B7280] mt-1">
+              <p className="text-sm text-[#A9A5C4] mt-1">
                 You have received honorary access as an{' '}
-                <strong className="text-[#151336]">
+                <strong className="text-[#F3EFE2]">
                   {userType === 'artist' ? 'Artist Patron' : 'Art Lover & Collector'}
                 </strong>
                 .
@@ -555,38 +543,38 @@ function JoinUsModal({
             </div>
 
             {/* Commemorative Pass Card */}
-            <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] p-5 text-left shadow-xs space-y-3 relative overflow-hidden">
-              <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
+            <div className="rounded-xl border border-[#3A3470] bg-[#120E36] p-5 text-left shadow-xs space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-[#3A3470] pb-3">
                 <div className="flex items-center gap-2">
-                  <Landmark size={16} className="text-[#D4A838]" />
-                  <span className="text-[10px] uppercase tracking-wider text-[#151336] font-bold">
+                  <Landmark size={16} className="text-[#E0C46A]" />
+                  <span className="text-[10px] uppercase tracking-wider text-[#F3EFE2] font-bold">
                     Zigguratss Artwork · Grand Master Hall
                   </span>
                 </div>
-                <span className="text-xs font-mono font-semibold text-[#6B7280]">
+                <span className="text-xs font-mono font-semibold text-[#A9A5C4]">
                   № {passNumber}
                 </span>
               </div>
 
               <div className="space-y-1">
                 <h3
-                  className="text-base font-serif text-[#151336] font-semibold"
+                  className="text-base font-serif text-[#F3EFE2] font-semibold"
                   style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
                 >
                   The Living Gallery Exhibition
                 </h3>
-                <p className="text-xs text-[#4B5563]">
+                <p className="text-xs text-[#A9A5C4]">
                   Grand Master Hall · 3D Interactive Exhibition
                 </p>
-                <div className="flex items-center gap-2 text-xs text-[#6B7280] pt-0.5">
-                  <Calendar size={13} className="text-[#D4A838]" />
+                <div className="flex items-center gap-2 text-xs text-[#A9A5C4] pt-0.5">
+                  <Calendar size={13} className="text-[#E0C46A]" />
                   <span>15 OCT — 30 NOV 2026</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB] text-xs text-[#6B7280]">
+              <div className="flex items-center justify-between pt-3 border-t border-[#3A3470] text-xs text-[#A9A5C4]">
                 <span>
-                  Holder: <strong className="text-[#151336] font-semibold">{fullName || 'Patron'}</strong>
+                  Holder: <strong className="text-[#F3EFE2] font-semibold">{fullName || 'Patron'}</strong>
                 </span>
                 <span className="text-[#10B981] flex items-center gap-1.5 font-semibold">
                   <ShieldCheck size={14} /> Verified
@@ -597,13 +585,13 @@ function JoinUsModal({
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
                 onClick={onClose}
-                className="w-full sm:w-auto sm:min-w-[180px] bg-[#D4A838] hover:bg-[#C49628] text-white py-3 px-8 rounded-full font-bold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-xs"
+                className="w-full sm:w-auto sm:min-w-[180px] bg-[#CFB04E] hover:brightness-105 text-[#17123F] py-3 px-8 rounded-full font-bold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-xs"
               >
                 Enter Museum Hall
               </button>
               <button
                 onClick={handleCopyCode}
-                className="w-full sm:w-auto px-6 py-3 rounded-full border border-[#E5E7EB] hover:bg-black/5 text-xs font-medium text-[#4B5563] hover:text-[#111827] transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 rounded-full border border-[#3A3470] hover:bg-white/5 text-xs font-medium text-[#A9A5C4] hover:text-[#F3EFE2] transition-colors cursor-pointer flex items-center justify-center gap-2"
                 title="Copy Pass Reference"
               >
                 {isCopied ? <CheckCircle2 size={15} className="text-[#10B981]" /> : <Share2 size={15} />}
