@@ -132,7 +132,7 @@ function JoinUsModal({
       }}
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 select-text overflow-y-auto"
     >
-      <div className="relative w-full max-w-[470px] min-h-[80vh] sm:min-h-[84vh] max-h-[96vh] my-auto bg-[#FAF8F5] rounded-[28px] sm:rounded-[32px] shadow-[0_30px_90px_rgba(23,18,63,0.32),0_0_0_1px_rgba(207,176,78,0.22)] border border-[#E5DDD0] px-6 sm:px-8 py-8 sm:py-9 text-[#17123F] overflow-y-auto custom-scrollbar flex flex-col justify-between">
+      <div className="relative w-full max-w-[460px] my-auto bg-[#FAF8F5] rounded-[28px] shadow-[0_30px_80px_rgba(23,18,63,0.28)] border border-[#E5DDD0] px-8 py-9 text-[#17123F] overflow-y-auto custom-scrollbar flex flex-col justify-between">
         {/* Subtle Painterly / Artistic Brushstroke Watermark in Background */}
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-gradient-to-br from-[#CCA030]/15 via-[#BD5E3B]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-gradient-to-tr from-[#7E9D8B]/18 via-[#1E362A]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
