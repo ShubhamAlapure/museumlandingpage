@@ -83,38 +83,38 @@ function JoinUsModal({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-black/65 backdrop-blur-md animate-in fade-in duration-200 select-text"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-black/60 backdrop-blur-md animate-in fade-in duration-200 select-text"
     >
-      <div className="relative w-[94vw] sm:w-[86vw] md:w-[78vw] lg:w-[72vw] xl:w-[70vw] max-w-[960px] bg-white rounded-3xl shadow-[0_30px_90px_-15px_rgba(0,0,0,0.4)] border border-[#E5E7EB] p-8 sm:p-12 md:p-14 lg:p-16 text-[#1E1D2E] overflow-hidden max-h-[92vh] overflow-y-auto custom-scrollbar">
+      <div className="relative w-full max-w-[700px] bg-white rounded-2xl sm:rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-[#E5E7EB] px-6 sm:px-12 md:px-14 py-8 sm:py-11 text-[#1E1C38] overflow-hidden max-h-[94vh] overflow-y-auto custom-scrollbar font-sans">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 sm:top-8 sm:right-8 p-3 rounded-full hover:bg-[#F3F4F6] text-[#6B7280] hover:text-[#111827] transition-colors cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full hover:bg-[#F3F4F6] text-[#6B7280] hover:text-[#111827] transition-colors cursor-pointer"
           aria-label="Close modal"
         >
-          <X size={24} />
+          <X size={20} />
         </button>
 
         {!isRegistered ? (
-          <div className="w-full max-w-[760px] mx-auto">
+          <div>
             {/* Header */}
-            <div className="text-center mb-8 sm:mb-10 lg:mb-12">
+            <div className="text-center mb-6 sm:mb-8">
               <h2
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-bold tracking-tight text-[#161834] uppercase"
-                style={{ fontFamily: "'Inter', 'Outfit', sans-serif" }}
+                className="text-[30px] sm:text-[36px] font-bold tracking-tight text-[#161938] uppercase"
+                style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}
               >
                 JOIN US
               </h2>
-              <p className="text-sm sm:text-base md:text-lg text-[#4B5563] mt-2.5 font-normal">
+              <p className="text-[14px] sm:text-[15px] text-[#4B5563] mt-1.5 font-normal">
                 Enter your details to get access
               </p>
             </div>
 
             {/* Registration Form */}
-            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 lg:space-y-7">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {/* Full Name */}
               <div>
-                <label className="block text-xs sm:text-sm md:text-[15px] font-semibold text-[#2D3748] mb-2 text-left">
+                <label className="block text-[14px] font-normal text-[#374151] mb-1.5 text-left">
                   Full Name
                 </label>
                 <input
@@ -123,13 +123,13 @@ function JoinUsModal({
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Full Name"
-                  className="w-full px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl border border-[#D1D5DB] text-sm sm:text-base text-[#1F2937] placeholder-[#9CA3AF] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all shadow-2xs"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-[#D1D5DB] text-[14px] text-[#1F2937] placeholder-[#9CA3AF] bg-white focus:border-[#D4A838] focus:ring-1 focus:ring-[#D4A838] outline-none transition-colors"
                 />
               </div>
 
               {/* Email Address */}
               <div>
-                <label className="block text-xs sm:text-sm md:text-[15px] font-semibold text-[#2D3748] mb-2 text-left">
+                <label className="block text-[14px] font-normal text-[#374151] mb-1.5 text-left">
                   Email Address
                 </label>
                 <input
@@ -138,13 +138,13 @@ function JoinUsModal({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
-                  className="w-full px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl border border-[#D1D5DB] text-sm sm:text-base text-[#1F2937] placeholder-[#9CA3AF] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all shadow-2xs"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-[#D1D5DB] text-[14px] text-[#1F2937] placeholder-[#9CA3AF] bg-white focus:border-[#D4A838] focus:ring-1 focus:ring-[#D4A838] outline-none transition-colors"
                 />
               </div>
 
               {/* Password with Show/Hide Toggle */}
               <div>
-                <label className="block text-xs sm:text-sm md:text-[15px] font-semibold text-[#2D3748] mb-2 text-left">
+                <label className="block text-[14px] font-normal text-[#374151] mb-1.5 text-left">
                   Password
                 </label>
                 <div className="relative flex items-center">
@@ -154,121 +154,125 @@ function JoinUsModal({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
-                    className="w-full px-5 sm:px-6 py-3.5 sm:py-4 pr-14 rounded-xl border border-[#D1D5DB] text-sm sm:text-base text-[#1F2937] placeholder-[#9CA3AF] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all shadow-2xs"
+                    className="w-full px-4 py-2.5 sm:py-3 pr-11 rounded-lg border border-[#D1D5DB] text-[14px] text-[#1F2937] placeholder-[#9CA3AF] bg-white focus:border-[#D4A838] focus:ring-1 focus:ring-[#D4A838] outline-none transition-colors"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 sm:right-5 text-[#6B7280] hover:text-[#111827] cursor-pointer p-2"
+                    className="absolute right-3.5 text-[#161938] hover:text-[#000000] cursor-pointer p-1"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+                    {showPassword ? <Eye size={19} /> : <EyeOff size={19} />}
                   </button>
                 </div>
               </div>
 
               {/* User Type Selection Radio */}
-              <div className="flex flex-wrap items-center gap-6 sm:gap-10 pt-1 text-sm sm:text-base text-[#374151]">
-                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+              <div className="flex flex-wrap items-center gap-6 sm:gap-8 pt-0.5 text-[14px] text-[#374151]">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="radio"
                     name="userType"
                     value="collector"
                     checked={userType === 'collector'}
                     onChange={() => setUserType('collector')}
-                    className="w-4 h-4 sm:w-5 sm:h-5 text-[#2563EB] accent-[#2563EB] cursor-pointer"
+                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB] cursor-pointer"
                   />
                   <span>I am an art lover, a collector</span>
                 </label>
-                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="radio"
                     name="userType"
                     value="artist"
                     checked={userType === 'artist'}
                     onChange={() => setUserType('artist')}
-                    className="w-4 h-4 sm:w-5 sm:h-5 text-[#2563EB] accent-[#2563EB] cursor-pointer"
+                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB] cursor-pointer"
                   />
                   <span>I am an artist</span>
                 </label>
               </div>
 
               {/* reCAPTCHA Verification Component */}
-              <div className="pt-2">
-                <div className="flex items-center justify-between bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl px-4 sm:px-6 py-3.5 sm:py-4 w-full max-w-[320px] shadow-xs select-none">
+              <div className="pt-1">
+                <div className="flex items-center justify-between bg-[#F9FAFB] border border-[#D1D5DB] rounded-md px-3.5 py-2.5 w-[265px] shadow-2xs select-none">
                   <div
-                    className="flex items-center gap-3.5 cursor-pointer"
+                    className="flex items-center gap-3 cursor-pointer"
                     onClick={handleCaptchaClick}
                   >
                     <div
-                      className={`w-6 h-6 sm:w-7 sm:h-7 rounded border transition-all flex items-center justify-center ${
+                      className={`w-6 h-6 rounded-[3px] border-2 transition-all flex items-center justify-center ${
                         captchaVerified
                           ? 'bg-[#10B981] border-[#10B981] text-white'
                           : isCaptchaChecking
                           ? 'border-[#3B82F6] animate-pulse'
-                          : 'bg-white border-[#D1D5DB] hover:border-[#9CA3AF]'
+                          : 'bg-white border-[#C1C7CD] hover:border-[#9CA3AF]'
                       }`}
                     >
                       {captchaVerified && (
-                        <Check size={18} strokeWidth={3} className="text-white" />
+                        <Check size={16} strokeWidth={3} className="text-white" />
                       )}
                       {isCaptchaChecking && (
-                        <div className="w-4 h-4 border-2 border-[#3B82F6] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-[#3B82F6] border-t-transparent rounded-full animate-spin" />
                       )}
                     </div>
-                    <span className="text-sm sm:text-base font-medium text-[#222222]">
+                    <span className="text-[13px] font-medium text-[#000000]">
                       I'm not a robot
                     </span>
                   </div>
-                  <div className="flex flex-col items-center justify-center pl-3">
-                    <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#1A73E8]" viewBox="0 0 48 48" fill="none">
+                  <div className="flex flex-col items-center justify-center pl-2">
+                    <svg className="w-7 h-7 text-[#1A73E8]" viewBox="0 0 48 48" fill="none">
                       <path
                         d="M24 8V2L16 10L24 18V12C30.63 12 36 17.37 36 24C36 26.04 35.48 27.96 34.58 29.64L37.52 32.58C39.08 30.06 40 27.14 40 24C40 15.16 32.84 8 24 8ZM24 36C17.37 36 12 30.63 12 24C12 21.96 12.52 20.04 13.42 18.36L10.48 15.42C8.92 17.94 8 20.86 8 24C8 32.84 15.16 40 24 40V46L32 38L24 30V36Z"
                         fill="#1A73E8"
                       />
                     </svg>
-                    <span className="text-[8px] sm:text-[9px] text-[#9CA3AF] tracking-tight font-sans mt-0.5">
+                    <span className="text-[7.5px] text-[#555555] tracking-tight font-sans mt-0.5">
                       reCAPTCHA
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Terms and Privacy Policy Checkbox */}
-              <div className="pt-2">
-                <label className="flex items-start gap-3.5 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={acceptedTerms}
-                    onChange={(e) => setAcceptedTerms(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded text-[#D4AF37] accent-[#D4AF37] cursor-pointer flex-shrink-0"
-                  />
-                  <span className="text-xs sm:text-sm md:text-[14.5px] text-[#4B5563] leading-relaxed">
+              {/* Terms and Privacy Policy Checkbox (Gold Box Match) */}
+              <div className="pt-1.5">
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                  <div
+                    onClick={() => setAcceptedTerms(!acceptedTerms)}
+                    className={`w-[18px] h-[18px] rounded-[3px] flex items-center justify-center flex-shrink-0 transition-colors ${
+                      acceptedTerms
+                        ? 'bg-[#CCA030] text-white'
+                        : 'border border-[#D1D5DB] bg-white text-transparent'
+                    }`}
+                  >
+                    <Check size={13} strokeWidth={3.5} />
+                  </div>
+                  <span className="text-[13px] sm:text-[13.5px] text-[#374151] font-normal leading-tight">
                     By Registering, I Accept The Terms & Conditions & Privacy Policy Of Zigguratss Artwork LLP.
                   </span>
                 </label>
               </div>
 
               {/* Action Buttons: Gold JOIN US / OR / Join Using Google */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 pt-4 sm:pt-6">
+              <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-6 sm:gap-8 pt-5 sm:pt-6">
                 <button
                   type="submit"
-                  className="w-full sm:w-auto sm:min-w-[190px] bg-[#D4AF37] hover:bg-[#C29B27] active:bg-[#B08A1E] text-white py-3.5 sm:py-4 px-9 sm:px-10 rounded-full font-bold text-xs sm:text-sm md:text-[15px] uppercase tracking-wider cursor-pointer shadow-md hover:shadow-xl transition-all duration-200 text-center"
+                  className="bg-[#CCA030] hover:bg-[#B88F28] active:bg-[#A68020] text-white py-3 px-10 sm:px-12 rounded-full font-bold text-[14px] uppercase tracking-wide cursor-pointer shadow-xs transition-all duration-200 text-center min-w-[160px] sm:min-w-[170px]"
                 >
                   JOIN US
                 </button>
 
-                <span className="text-xs sm:text-sm md:text-base font-semibold text-[#6B7280] uppercase tracking-wide px-2">
+                <span className="text-[13.5px] font-normal text-[#6B7280] uppercase tracking-wide">
                   OR
                 </span>
 
                 <button
                   type="button"
                   onClick={handleGoogleJoin}
-                  className="w-full sm:w-auto sm:min-w-[230px] bg-[#F3F4F6] hover:bg-[#E5E7EB] border border-[#E5E7EB] text-[#374151] py-3 sm:py-3.5 px-6 sm:px-7 rounded-full text-xs sm:text-sm md:text-[15px] font-medium flex items-center justify-center gap-3 cursor-pointer transition-all shadow-xs"
+                  className="bg-[#F3F4F6] hover:bg-[#E5E7EB] border border-[#E5E7EB] text-[#374151] py-2.5 px-5 sm:px-6 rounded-full text-[13.5px] sm:text-[14px] font-normal flex items-center justify-center gap-2.5 cursor-pointer transition-all shadow-xs min-w-[190px] sm:min-w-[210px]"
                 >
                   {/* Google Multicolor 'G' Icon */}
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
                     <path
                       fill="#4285F4"
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -293,24 +297,24 @@ function JoinUsModal({
           </div>
         ) : (
           /* Confirmation Pass Screen */
-          <div className="w-full max-w-[760px] mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-300 text-center py-4 sm:py-6">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center mx-auto text-[#10B981]">
-              <CheckCircle2 size={42} />
+          <div className="space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-300 text-center py-4">
+            <div className="w-16 h-16 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center mx-auto text-[#10B981]">
+              <CheckCircle2 size={38} />
             </div>
 
             <div>
-              <span className="text-xs sm:text-sm tracking-[0.25em] uppercase text-[#D4AF37] font-bold">
+              <span className="text-xs tracking-[0.25em] uppercase text-[#D4A838] font-bold">
                 Pass Confirmed · Verified
               </span>
               <h2
-                className="text-3xl sm:text-4xl font-serif text-[#161834] mt-2"
+                className="text-2xl sm:text-3xl font-serif text-[#151336] mt-1.5"
                 style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
               >
                 Welcome, {fullName || 'Patron'}
               </h2>
-              <p className="text-sm sm:text-base text-[#6B7280] mt-1.5">
+              <p className="text-sm text-[#6B7280] mt-1">
                 You have received honorary access as an{' '}
-                <strong className="text-[#161834]">
+                <strong className="text-[#151336]">
                   {userType === 'artist' ? 'Artist Patron' : 'Art Lover & Collector'}
                 </strong>
                 .
@@ -318,58 +322,58 @@ function JoinUsModal({
             </div>
 
             {/* Commemorative Pass Card */}
-            <div className="rounded-2xl border border-[#E5E7EB] bg-[#F9FAFB] p-6 sm:p-7 text-left shadow-xs space-y-4 relative overflow-hidden">
-              <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3.5">
-                <div className="flex items-center gap-2.5">
-                  <Landmark size={18} className="text-[#D4AF37]" />
-                  <span className="text-[11px] uppercase tracking-wider text-[#161834] font-bold">
+            <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] p-5 text-left shadow-xs space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
+                <div className="flex items-center gap-2">
+                  <Landmark size={16} className="text-[#D4A838]" />
+                  <span className="text-[10px] uppercase tracking-wider text-[#151336] font-bold">
                     Zigguratss Artwork · Grand Master Hall
                   </span>
                 </div>
-                <span className="text-xs sm:text-sm font-mono font-semibold text-[#6B7280]">
+                <span className="text-xs font-mono font-semibold text-[#6B7280]">
                   № {passNumber}
                 </span>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <h3
-                  className="text-lg sm:text-xl font-serif text-[#161834] font-semibold"
+                  className="text-base font-serif text-[#151336] font-semibold"
                   style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
                 >
                   The Living Gallery Exhibition
                 </h3>
-                <p className="text-xs sm:text-sm text-[#4B5563]">
+                <p className="text-xs text-[#4B5563]">
                   Grand Master Hall · 3D Interactive Exhibition
                 </p>
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-[#6B7280] pt-0.5">
-                  <Calendar size={14} className="text-[#D4AF37]" />
+                <div className="flex items-center gap-2 text-xs text-[#6B7280] pt-0.5">
+                  <Calendar size={13} className="text-[#D4A838]" />
                   <span>15 OCT — 30 NOV 2026</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-3.5 border-t border-[#E5E7EB] text-xs sm:text-sm text-[#6B7280]">
+              <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB] text-xs text-[#6B7280]">
                 <span>
-                  Holder: <strong className="text-[#161834] font-semibold">{fullName || 'Patron'}</strong>
+                  Holder: <strong className="text-[#151336] font-semibold">{fullName || 'Patron'}</strong>
                 </span>
                 <span className="text-[#10B981] flex items-center gap-1.5 font-semibold">
-                  <ShieldCheck size={16} /> Verified
+                  <ShieldCheck size={14} /> Verified
                 </span>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3.5 pt-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
                 onClick={onClose}
-                className="w-full sm:flex-1 bg-[#D4AF37] hover:bg-[#C29B27] text-white py-4 rounded-full font-semibold text-xs sm:text-sm uppercase tracking-wider cursor-pointer transition-all shadow-md"
+                className="w-full sm:w-auto sm:min-w-[180px] bg-[#D4A838] hover:bg-[#C49628] text-white py-3 px-8 rounded-full font-bold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-xs"
               >
                 Enter Museum Hall
               </button>
               <button
                 onClick={handleCopyCode}
-                className="w-full sm:w-auto px-7 py-4 rounded-full border border-[#E5E7EB] hover:bg-black/5 text-xs sm:text-sm font-medium text-[#4B5563] hover:text-[#111827] transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 rounded-full border border-[#E5E7EB] hover:bg-black/5 text-xs font-medium text-[#4B5563] hover:text-[#111827] transition-colors cursor-pointer flex items-center justify-center gap-2"
                 title="Copy Pass Reference"
               >
-                {isCopied ? <CheckCircle2 size={16} className="text-[#10B981]" /> : <Share2 size={16} />}
+                {isCopied ? <CheckCircle2 size={15} className="text-[#10B981]" /> : <Share2 size={15} />}
                 {isCopied ? 'Copied' : 'Share Pass'}
               </button>
             </div>
