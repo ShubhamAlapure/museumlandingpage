@@ -147,12 +147,12 @@ function JoinUsModal({
             </div>
 
             {/* Registration Form with Elongated Spacing */}
-            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 flex-1 flex flex-col justify-between">
+            <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
               <div className="space-y-5 sm:space-y-6">
                 {/* Full Name */}
                 <div>
                   <label
-                    className="block text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
+                    className="block text-[13.5px] sm:text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                   >
                     Full Name
@@ -164,14 +164,14 @@ function JoinUsModal({
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Full Name"
                     style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
-                    className="w-full px-5 py-4 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
+                    className="w-full px-4.5 sm:px-5 py-3.5 sm:py-4 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14px] sm:text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
                   />
                 </div>
 
                 {/* Email Address */}
                 <div>
                   <label
-                    className="block text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
+                    className="block text-[13.5px] sm:text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                   >
                     Email Address
@@ -183,14 +183,14 @@ function JoinUsModal({
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
-                    className="w-full px-5 py-4 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
+                    className="w-full px-4.5 sm:px-5 py-3.5 sm:py-4 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14px] sm:text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
                   />
                 </div>
 
                 {/* Password with Show/Hide Toggle */}
                 <div>
                   <label
-                    className="block text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
+                    className="block text-[13.5px] sm:text-[14px] font-semibold text-[#223128] mb-2 text-left tracking-tight"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                   >
                     Password
@@ -203,7 +203,7 @@ function JoinUsModal({
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Password"
                       style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif" }}
-                      className="w-full px-5 py-4 pr-13 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
+                      className="w-full px-4.5 sm:px-5 py-3.5 sm:py-4 pr-13 rounded-2xl border border-[#DDD5C7] bg-white/95 text-[14px] sm:text-[14.5px] text-[#16221B] placeholder-[#9CA3AF] focus:border-[#C59A27] focus:ring-2 focus:ring-[#C59A27]/25 outline-none transition-all shadow-[0_2px_6px_rgba(0,0,0,0.02)]"
                     />
                     <button
                       type="button"
@@ -218,7 +218,7 @@ function JoinUsModal({
 
                 {/* User Type Selection Radio */}
                 <div
-                  className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-7 pt-1 text-[14px] text-[#334239]"
+                  className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-7 pt-2 text-[13.5px] sm:text-[14px] text-[#334239]"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   <label className="flex items-center gap-2.5 cursor-pointer select-none">
@@ -246,7 +246,7 @@ function JoinUsModal({
                 </div>
 
                 {/* reCAPTCHA Verification Component */}
-                <div className="pt-1">
+                <div className="pt-2">
                   <div className="flex items-center justify-between bg-white border border-[#DDD5C7] rounded-2xl px-4.5 py-3.5 w-full sm:w-[290px] shadow-2xs select-none">
                     <div
                       className="flex items-center gap-3.5 cursor-pointer"
@@ -269,7 +269,7 @@ function JoinUsModal({
                         )}
                       </div>
                       <span
-                        className="text-[14px] font-semibold text-[#111827]"
+                        className="text-[13.5px] sm:text-[14px] font-semibold text-[#111827]"
                         style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                       >
                         I'm not a robot
@@ -289,8 +289,8 @@ function JoinUsModal({
                   </div>
                 </div>
 
-                {/* Terms and Privacy Policy Checkbox */}
-                <div className="pt-1">
+                {/* Terms and Privacy Policy Checkbox (ends cleanly at Privacy Policy) */}
+                <div className="pt-2">
                   <label className="flex items-start gap-3 cursor-pointer select-none">
                     <div
                       onClick={() => setAcceptedTerms(!acceptedTerms)}
@@ -306,18 +306,18 @@ function JoinUsModal({
                       className="text-[13px] sm:text-[13.5px] text-[#55635C] font-normal leading-relaxed"
                       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                     >
-                      By Registering, I Accept The Terms & Conditions & Privacy Policy Of Zigguratss Artwork LLP.
+                      By Registering, I Accept The Terms & Conditions & Privacy Policy.
                     </span>
                   </label>
                 </div>
               </div>
 
               {/* Vertical / Stacked Action Buttons */}
-              <div className="space-y-4 pt-6 sm:pt-8">
+              <div className="space-y-4 pt-7 sm:pt-9">
                 <button
                   type="submit"
                   style={{ fontFamily: "'Cinzel', 'Plus Jakarta Sans', sans-serif" }}
-                  className="w-full bg-gradient-to-r from-[#D4A838] via-[#CCA030] to-[#B88F28] hover:from-[#CCA030] hover:to-[#A68020] text-white py-4.5 px-6 rounded-full font-bold text-[15px] uppercase tracking-[0.16em] cursor-pointer shadow-[0_6px_24px_rgba(204,160,48,0.38)] hover:shadow-[0_8px_30px_rgba(204,160,48,0.48)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 text-center"
+                  className="w-full bg-gradient-to-r from-[#D4A838] via-[#CCA030] to-[#B88F28] hover:from-[#CCA030] hover:to-[#A68020] text-white py-4.5 px-6 rounded-full font-bold text-[14.5px] sm:text-[15px] uppercase tracking-[0.16em] cursor-pointer shadow-[0_6px_24px_rgba(204,160,48,0.38)] hover:shadow-[0_8px_30px_rgba(204,160,48,0.48)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 text-center"
                 >
                   JOIN US
                 </button>
@@ -338,7 +338,7 @@ function JoinUsModal({
                   type="button"
                   onClick={handleGoogleJoin}
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                  className="w-full bg-white hover:bg-[#F3EFEA] border border-[#DDD5C7] text-[#223128] py-4 px-6 rounded-full text-[14.5px] font-semibold flex items-center justify-center gap-3 cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all shadow-2xs"
+                  className="w-full bg-white hover:bg-[#F3EFEA] border border-[#DDD5C7] text-[#223128] py-4 px-6 rounded-full text-[14px] sm:text-[14.5px] font-semibold flex items-center justify-center gap-3 cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all shadow-2xs"
                 >
                   {/* Google Multicolor 'G' Icon */}
                   <svg className="w-5.5 h-5.5 flex-shrink-0" viewBox="0 0 24 24">
